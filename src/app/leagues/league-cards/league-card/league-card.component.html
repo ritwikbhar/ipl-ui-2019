@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header card-header-success">
+    <h4 class="card-title">{{ cardDetails.title }}</h4>
+    <p class="card-category">{{ cardDetails.date }}</p>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div id="home-team" class="col">
+        <img class="img-thumbnail team-flag float-left" src="{{ cardDetails.homeTeam.flag }}"> 
+        <br>
+        <span class="float-left">{{ cardDetails.homeTeam.shortName }}</span>
+      </div>
+      <div id="away-team" class="col">
+        <img class="img-thumbnail team-flag float-right" src="{{ cardDetails.awayTeam.flag }}"> 
+        <br>
+        <span class="float-right">{{ cardDetails.awayTeam.shortName }}</span>
+      </div>
+    </div>
+    <br>
+    <a class="btn btn-blue-grey waves-light full-btn" [routerLink]="[cardDetails.leagueId]" mdbWavesEffect>VIEW</a>
+  </div>
+</div>

@@ -8,6 +8,9 @@ import { AppRoutingModule } from './routing.module';
 
 import { ComponentsModule } from './components/components.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
+import { LeaguesModule } from './leagues/leagues.module';
+import { ProfileModule } from './profile/profile.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 import { AppComponent } from './app.component';
 
@@ -23,7 +26,10 @@ import {
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    LeaderboardModule
+    LeaderboardModule,
+    LeaguesModule,
+    DashboardModule,
+    ProfileModule
   ],
   declarations: [
     AppComponent

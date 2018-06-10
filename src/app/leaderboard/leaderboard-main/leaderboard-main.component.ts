@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leaderboard-main.component.css']
 })
 export class LeaderboardMainComponent implements OnInit {
+  title = "Leaderboard";
 
   constructor() { }
 
