@@ -9,17 +9,28 @@ import { MatchService } from '../match/match.service';
 import { ConverterService } from './converter.service';
 import { LeagueDetailsComponent } from './league-details/league-details.component';
 import { AppRoutingModule } from '../routing.module';
+import { WinPredictorLeagueComponent } from './league-details/win-predictor-league/win-predictor-league.component';
+import { StatQuizLeagueComponent } from './league-details/stat-quiz-league/stat-quiz-league.component';
+import { FantasyLeagueComponent } from './league-details/fantasy-league/fantasy-league.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatSliderModule } from '@angular/material/slider';
+
+
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSliderModule
   ],
   declarations: [
-    LeaguesMainComponent, 
-    LeagueCardsComponent, 
-    LeagueCardComponent, LeagueDetailsComponent
+    LeaguesMainComponent,
+    LeagueCardsComponent,
+    LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent
   ],
   exports: [LeaguesMainComponent],
   providers: [LeaguesService, MatchService, ConverterService]

@@ -1,3 +1,3 @@
-<p>
-  league-details works!
-</p>
+<app-win-predictor-league *ngIf="isWinPredictor()" [league]="league"></app-win-predictor-league>
+<app-stat-quiz-league *ngIf="isStatQuiz()"></app-stat-quiz-league>
+<app-fantasy-league *ngIf="isFantasyLeague()"></app-fantasy-league>

@@ -13,7 +13,8 @@ export class ConverterService {
       title: league.name,
       homeTeam: league.match.team1,
       awayTeam: league.match.team2,
-      date: league.match.date
+      date: league.match.date,
+      league: league
     };
     return cardDetails;
   }

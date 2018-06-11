@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <h3 class="info-text">{{ league.name }}</h3>
+  </div>
+  <br>
+  <div class="row">
+    <mat-tab-group class="demo-tab-group col-12">
+      <mat-tab label="My Answer">
+        <div class="demo-tab-content">
+          <div class="row">
+            <div class="col" id="home-team">
+              <img class="img-thumbnail team-flag float-left" src="{{ league.match.team1.flag }}" />
+              <br>
+              <div class="float-left">
+                <h5>{{ league.match.team1.name }}</h5>
+                <h6>{{ league.match.team1.shortName }}</h6>
+              </div>
+            </div>
+            <div class="col" id="away-team">
+              <img class="img-thumbnail team-flag float-right" src="{{ league.match.team2.flag }}">
+              <br>
+              <div class="float-right">
+                <h5>{{ league.match.team2.name }}</h5>
+                <h6>{{ league.match.team2.shortName }}</h6>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+              <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ (maxVal + minVal) / 2 }}" class="col-6" (input)="onSliderChange($event)"></mat-slider>
+          </div>
+          <p class="text-center">
+            You think {{ selectedResult }}
+          </p>
+          <div class="row justify-content-center">
+              <button type="button" class="btn btn-outline-success" mdbWavesEffect (click)="decreaseBet()">
+                <i class="material-icons">expand_more</i>
+              </button>
+              <button type="button" class="btn btn-success waves-light" mdbWavesEffect id="bet-btn">
+                BET with {{ coinsBet }} coins
+              </button>
+              <button type="button" class="btn btn-outline-danger" mdbWavesEffect (click)="increaseBet()">
+                <i class="material-icons">expand_less</i>
+              </button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Leaderboard" disabled="true">
+        <div class="demo-tab-content">
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
