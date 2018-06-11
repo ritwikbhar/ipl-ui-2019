@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { League } from './models/League';
 import { MatchService } from '../match/match.service';
+import { Question } from './models/Question';
 
 @Injectable()
 export class LeaguesService {
@@ -53,6 +54,13 @@ export class LeaguesService {
     });
   }
 
+  public getQuestionsForLeague(leagueId:string):Promise<Question[]> {
+    return new Promise<Question[]>(resolve => {
+      let questions : Question[] = this.questions.filter(question => question.leagueId === leagueId);
+      resolve(questions);
+    });
+  }
+
   private leagues: any[] = [
     {
       id: '1',
@@ -83,5 +91,39 @@ export class LeaguesService {
       cType: "WIN_PREDICTOR"
     }
   ];
+
+  private questions : Question[] = [
+    {
+      id: '1',
+      question: 'Will Ramos get a yellow card today?',
+      leagueId: '2'
+    },
+    {
+      id: '2',
+      question: 'Will there be a red card?',
+      leagueId: '2'
+    },
+    {
+      id: '3',
+      question: 'Can Germany have more than 50% possession?',
+      leagueId: '2'
+    },
+
+    {
+      id: '4',
+      question: 'Will Neymar score a goal?',
+      leagueId: '3'
+    },
+    {
+      id: '5',
+      question: 'Will there be a red card today?',
+      leagueId: '3'
+    },
+    {
+      id: '6',
+      question: 'Can Brail have more than 50% possession?',
+      leagueId: '3'
+    }
+  ]
 
 }

@@ -14,7 +14,6 @@ export class WinPredictorLeagueComponent implements OnInit {
   maxVal = 20;
   minVal = 0;
 
-  coinsBet: number = 50;
   selectedResult: string = "match would be DRAW";
 
   constructor() { }
@@ -37,13 +36,7 @@ export class WinPredictorLeagueComponent implements OnInit {
     }
   }
 
-  increaseBet() {
-    this.coinsBet += 25;
-  }
-
-  decreaseBet() {
-    if (this.coinsBet > 25) {
-      this.coinsBet -= 25;
-    }
+  onBetClicked(event) {
+    console.log(event);
   }
 }

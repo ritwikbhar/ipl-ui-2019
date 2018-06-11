@@ -15,6 +15,9 @@ import { FantasyLeagueComponent } from './league-details/fantasy-league/fantasy-
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { BetBtnComponent } from './bet-btn/bet-btn.component';
+
 
 
 
@@ -25,12 +28,13 @@ import { MatSliderModule } from '@angular/material/slider';
     AppRoutingModule,
     MatTabsModule,
     MatCardModule,
-    MatSliderModule
+    MatSliderModule,
+    MatSlideToggleModule
   ],
   declarations: [
     LeaguesMainComponent,
     LeagueCardsComponent,
-    LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent
+    LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent, BetBtnComponent
   ],
   exports: [LeaguesMainComponent],
   providers: [LeaguesService, MatchService, ConverterService]

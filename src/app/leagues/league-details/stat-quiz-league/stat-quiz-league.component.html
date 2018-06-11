@@ -1,3 +1,58 @@
-<p>
-  stat-quiz-league works!
-</p>
+<div class="container">
+  <div class="row">
+    <h3 class="info-text">{{ league.name }}</h3>
+  </div>
+  <br>
+  <div class="row">
+    <mat-tab-group class="demo-tab-group col-12">
+      <mat-tab label="My Answer">
+        <div class="demo-tab-content">
+          <div class="row">
+            <div class="col" id="home-team">
+              <img class="img-thumbnail team-flag float-left" src="{{ league.match.team1.flag }}" />
+              <br>
+              <div class="float-left">
+                <h5>{{ league.match.team1.name }}</h5>
+                <h6>{{ league.match.team1.shortName }}</h6>
+              </div>
+            </div>
+            <div class="col" id="away-team">
+              <img class="img-thumbnail team-flag float-right" src="{{ league.match.team2.flag }}">
+              <br>
+              <div class="float-right">
+                <h5>{{ league.match.team2.name }}</h5>
+                <h6>{{ league.match.team2.shortName }}</h6>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="container">
+            <h4>Guess the following stats...</h4>
+            <ol>
+              <li  *ngFor="let question of questions">
+                <div class="row">
+                  <p class='col-6'>
+                    {{ question.question }}
+                  </p>
+                  <p class='col-2'>
+                    <mat-slide-toggle class="example-margin">
+                    </mat-slide-toggle>
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="row justify-content-center">
+            <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
+          </div>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Leaderboard" disabled="true">
+        <div class="demo-tab-content">
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
