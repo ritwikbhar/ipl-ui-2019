@@ -1,0 +1,13 @@
+<div *ngIf="betFeasable">
+  <h4 class="text-center">Confirm your bet</h4>
+  <p class="text-center">
+    You are about to bet in this league with {{ bettedAmount }} coins. You will have {{ remainingBalance }} coins left in your
+    wallet.
+  </p>
+  <div class="row justify-content-center">
+      <button type="button" class="btn btn-outline-info" (click)="confirmClicked()"mdbWavesEffect>CONFIRM</button>
+  </div>
+</div>
+<div *ngIf="!betFeasable">
+  You do not have enough coins to bet with {{ bettedAmount }} coins
+</div>

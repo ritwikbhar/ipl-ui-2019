@@ -2,19 +2,24 @@ import { Component, OnInit, Input } from '@angular/core';
 import { League } from '../../models/League';
 import { Question } from '../../models/Question';
 import { LeaguesService } from '../../leagues.service';
+import { Notifyable } from '../../../util/Notifyable';
+import { ConfirmationDialogInput, ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-stat-quiz-league',
   templateUrl: './stat-quiz-league.component.html',
   styleUrls: ['./stat-quiz-league.component.scss']
 })
-export class StatQuizLeagueComponent implements OnInit {
+export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   @Input() league: League;
 
   questions: Question[];
 
-  constructor(private leagueService : LeaguesService) { }
+  private coinsToBet : number;
+
+  constructor(private leagueService : LeaguesService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.leagueService.getQuestionsForLeague(this.league.id).then(questions=>{
@@ -22,7 +27,35 @@ export class StatQuizLeagueComponent implements OnInit {
     });
   }
 
-  onBetClicked(value) {
-    console.log(value);
+  /**
+   * To be called by the modal component to return the result
+   * @param result
+   */
+  notify(result: String) {
+    if (result === 'YES') {
+      this.continueWithBet();
+    }
   }
+
+  onBetClicked(event) {
+    console.log(event);
+
+    this.coinsToBet = event;
+
+    let dialogData : ConfirmationDialogInput = {
+      cointToBet : this.coinsToBet,
+      toNotify: this,
+      userId: '1'
+    };
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+  }
+
+  private continueWithBet(): void {
+
+  }
+
 }

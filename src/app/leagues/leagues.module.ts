@@ -17,7 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BetBtnComponent } from './bet-btn/bet-btn.component';
-
+import { ConfirmationDialogComponent } from './league-details/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -29,13 +30,15 @@ import { BetBtnComponent } from './bet-btn/bet-btn.component';
     MatTabsModule,
     MatCardModule,
     MatSliderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ],
   declarations: [
     LeaguesMainComponent,
     LeagueCardsComponent,
-    LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent, BetBtnComponent
+    LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent, BetBtnComponent, ConfirmationDialogComponent
   ],
+  entryComponents:[ConfirmationDialogComponent],
   exports: [LeaguesMainComponent],
   providers: [LeaguesService, MatchService, ConverterService]
 })

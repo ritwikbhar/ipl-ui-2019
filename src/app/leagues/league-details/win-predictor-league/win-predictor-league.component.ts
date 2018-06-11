@@ -1,13 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { League } from '../../models/League';
 import { MatSliderChange } from '@angular/material/slider';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent, ConfirmationDialogInput } from '../confirmation-dialog/confirmation-dialog.component';
+import { Notifyable } from '../../../util/Notifyable';
 
 @Component({
   selector: 'app-win-predictor-league',
   templateUrl: './win-predictor-league.component.html',
   styleUrls: ['./win-predictor-league.component.scss']
 })
-export class WinPredictorLeagueComponent implements OnInit {
+export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
   @Input() league: League;
 
@@ -16,9 +19,22 @@ export class WinPredictorLeagueComponent implements OnInit {
 
   selectedResult: string = "match would be DRAW";
 
-  constructor() { }
+  private coinsToBet : number;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+
+  }
+
+  /**
+   * To be called by the modal component to return the result
+   * @param result
+   */
+  notify(result: String) {
+    if (result === 'YES') {
+      this.continueWithBet();
+    }
   }
 
   onSliderChange(sliderChangeEvent: MatSliderChange) {
@@ -38,5 +54,22 @@ export class WinPredictorLeagueComponent implements OnInit {
 
   onBetClicked(event) {
     console.log(event);
+
+    this.coinsToBet = event;
+
+    let dialogData : ConfirmationDialogInput = {
+      cointToBet : this.coinsToBet,
+      toNotify: this,
+      userId: '1'
+    };
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+  }
+
+  private continueWithBet(): void {
+
   }
 }
