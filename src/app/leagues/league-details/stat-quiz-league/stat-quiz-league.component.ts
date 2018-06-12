@@ -3,7 +3,7 @@ import { League } from '../../models/League';
 import { Question } from '../../models/Question';
 import { LeaguesService } from '../../leagues.service';
 import { Notifyable } from '../../../util/Notifyable';
-import { ConfirmationDialogInput, ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogInput, ConfirmationDialogComponent, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -19,6 +19,8 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   private coinsToBet : number;
 
+  private alreadyBetted : boolean;
+
   constructor(private leagueService : LeaguesService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -33,7 +35,12 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
    */
   notify(result: String) {
     if (result === 'YES') {
-      this.continueWithBet();
+      if (this.alreadyBetted) {
+        this.continueWithdrawl();
+      }
+      else {
+        this.continueWithBet();
+      }
     }
   }
 
@@ -45,7 +52,22 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     let dialogData : ConfirmationDialogInput = {
       cointToBet : this.coinsToBet,
       toNotify: this,
-      userId: '1'
+      userId: '1',
+      type: ConfirmationType.WITHDRAWL
+    };
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+  }
+
+  onWithdrawClicked(){
+    let dialogData : ConfirmationDialogInput = {
+      cointToBet : this.coinsToBet,
+      toNotify: this,
+      userId: '1',
+      type: ConfirmationType.WITHDRAWL
     };
 
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -55,7 +77,11 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
   }
 
   private continueWithBet(): void {
+    this.alreadyBetted = true;
+  }
 
+  private continueWithdrawl(): void {
+    this.alreadyBetted = false;
   }
 
 }

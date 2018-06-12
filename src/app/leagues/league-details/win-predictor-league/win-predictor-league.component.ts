@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { League } from '../../models/League';
 import { MatSliderChange } from '@angular/material/slider';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent, ConfirmationDialogInput } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent, ConfirmationDialogInput, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { Notifyable } from '../../../util/Notifyable';
 
 @Component({
@@ -19,7 +19,8 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
   selectedResult: string = "match would be DRAW";
 
-  private coinsToBet : number;
+  private coinsToBet: number;
+  private alreadyBetted: boolean;
 
   constructor(public dialog: MatDialog) { }
 
@@ -33,7 +34,12 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
    */
   notify(result: String) {
     if (result === 'YES') {
-      this.continueWithBet();
+      if (this.alreadyBetted) {
+        this.continueWithdrawl();
+      }
+      else {
+        this.continueWithBet();
+      }
     }
   }
 
@@ -57,10 +63,25 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
     this.coinsToBet = event;
 
-    let dialogData : ConfirmationDialogInput = {
-      cointToBet : this.coinsToBet,
+    let dialogData: ConfirmationDialogInput = {
+      cointToBet: this.coinsToBet,
       toNotify: this,
-      userId: '1'
+      userId: '1',
+      type: ConfirmationType.BET
+    };
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+  }
+
+  onWithdrawClicked() {
+    let dialogData: ConfirmationDialogInput = {
+      cointToBet: this.coinsToBet,
+      toNotify: this,
+      userId: '1',
+      type: ConfirmationType.WITHDRAWL
     };
 
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -70,6 +91,10 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   }
 
   private continueWithBet(): void {
+    this.alreadyBetted = true;
+  }
 
+  private continueWithdrawl(): void {
+    this.alreadyBetted = false;
   }
 }

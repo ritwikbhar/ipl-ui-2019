@@ -31,9 +31,14 @@
           <p class="text-center">
             You think {{ selectedResult }}
           </p>
-          <div class="row justify-content-center">
+          <div class="row justify-content-center" *ngIf="!alreadyBetted">
               <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
           </div>
+          <div class="row justify-content-center" *ngIf="alreadyBetted">
+              <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
+                Withdraw From Bet
+              </button>
+            </div>
         </div>
       </mat-tab>
       <mat-tab label="Leaderboard" disabled="true">

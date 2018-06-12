@@ -12,6 +12,7 @@ export class ConfirmationDialogComponent implements OnInit {
   betFeasable : boolean;
   remainingBalance : number;
   bettedAmount: number;
+  isWithdrawl: boolean;
 
   constructor(
     private dialogRef : MatDialogRef<ConfirmationDialogComponent>,
@@ -22,6 +23,7 @@ export class ConfirmationDialogComponent implements OnInit {
     this.betFeasable = true;
     this.remainingBalance = 10;
     this.bettedAmount = this.data.cointToBet
+    this.isWithdrawl = this.data.type === ConfirmationType.WITHDRAWL;
   }
 
   confirmClicked(){
@@ -34,5 +36,11 @@ export class ConfirmationDialogComponent implements OnInit {
 export interface ConfirmationDialogInput {
   toNotify : Notifyable<String>,
   cointToBet: number,
-  userId: string
+  userId: string,
+  type: ConfirmationType
+}
+
+export enum ConfirmationType {
+  BET,
+  WITHDRAWL
 }
