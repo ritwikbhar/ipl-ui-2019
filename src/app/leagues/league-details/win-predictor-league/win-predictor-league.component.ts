@@ -19,13 +19,27 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
   selectedResult: string = "match would be DRAW";
 
+  matchResultText: string;
+  
   private coinsToBet: number;
   private alreadyBetted: boolean;
 
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-
+    let match = this.league.match;
+    if(match.finished){
+      let scoreDiff = match.team1Score - match.team2Score;
+      if(scoreDiff === 0){
+        this.matchResultText = "The match was Draw";
+      }
+      else if(scoreDiff > 0){
+        this.matchResultText = match.team1.name + " won by " + Math.abs(scoreDiff) + " goals";
+      }
+      else {
+        this.matchResultText = match.team2.name + " won by " + Math.abs(scoreDiff) + " goals";
+      }
+    }
   }
 
   /**

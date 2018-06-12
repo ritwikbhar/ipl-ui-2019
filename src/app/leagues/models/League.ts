@@ -5,5 +5,6 @@ export interface League {
     name: string,
     date: string,
     match: Match,
-    cType: string
+    cType: string,
+    locked: boolean
 }

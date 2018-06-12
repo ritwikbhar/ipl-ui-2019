@@ -21,11 +21,18 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   private alreadyBetted : boolean;
 
+  private answersVisible : boolean = true;
+
   constructor(private leagueService : LeaguesService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.leagueService.getQuestionsForLeague(this.league.id).then(questions=>{
       this.questions = questions;
+      questions.forEach(question =>{
+        if(question.answer === null){
+          this.answersVisible = false;
+        }
+      })
     });
   }
 
@@ -53,7 +60,7 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
       cointToBet : this.coinsToBet,
       toNotify: this,
       userId: '1',
-      type: ConfirmationType.WITHDRAWL
+      type: ConfirmationType.BET
     };
 
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {

@@ -2,5 +2,6 @@
 export interface Question {
     id: string,
     question: string,
-    leagueId: string
+    leagueId: string,
+    answer: boolean
 }

@@ -23,6 +23,9 @@ export class MatchService {
             stadium: null,
             team1: team1,
             team2: team2,
+            team1Score: match.team1Score,
+            team2Score: match.team2Score,
+            finished: match.finished
           };
           resolve(internalizedMatch);
         });
@@ -44,8 +47,9 @@ export class MatchService {
       team1: "1",
       team2: "2",
       stadium: "string",
-      winner: "string",
-      winBy: "string"
+      team1Score: null,
+      team2Score: null,
+      finished: false
     },
     {
       id: "2",
@@ -54,8 +58,9 @@ export class MatchService {
       team1: "3",
       team2: "2",
       stadium: "string",
-      winner: "string",
-      winBy: "string"
+      team1Score: null,
+      team2Score: null,
+      finished: false
     },
     {
       id: "3",
@@ -64,8 +69,9 @@ export class MatchService {
       team1: "3",
       team2: "1",
       stadium: "string",
-      winner: "string",
-      winBy: "string"
+      team1Score: 2,
+      team2Score: 3,
+      finished: true
     }
   ];
 

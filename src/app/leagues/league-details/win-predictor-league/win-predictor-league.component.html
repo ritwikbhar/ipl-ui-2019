@@ -7,38 +7,32 @@
     <mat-tab-group class="demo-tab-group col-12">
       <mat-tab label="My Answer">
         <div class="demo-tab-content">
-          <div class="row">
-            <div class="col" id="home-team">
-              <img class="img-thumbnail team-flag float-left" src="{{ league.match.team1.flag }}" />
-              <br>
-              <div class="float-left">
-                <h5>{{ league.match.team1.name }}</h5>
-                <h6>{{ league.match.team1.shortName }}</h6>
-              </div>
-            </div>
-            <div class="col" id="away-team">
-              <img class="img-thumbnail team-flag float-right" src="{{ league.match.team2.flag }}">
-              <br>
-              <div class="float-right">
-                <h5>{{ league.match.team2.name }}</h5>
-                <h6>{{ league.match.team2.shortName }}</h6>
-              </div>
-            </div>
-          </div>
+          <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
           <div class="row justify-content-center">
-              <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ (maxVal + minVal) / 2 }}" class="col-6" (input)="onSliderChange($event)"></mat-slider>
+            <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ (maxVal + minVal) / 2 }}" class="col-6" (input)="onSliderChange($event)"
+              disabled="{{ league.locked }}"></mat-slider>
           </div>
           <p class="text-center">
             You think {{ selectedResult }}
           </p>
-          <div class="row justify-content-center" *ngIf="!alreadyBetted">
-              <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
+          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked">
+            <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
           </div>
-          <div class="row justify-content-center" *ngIf="alreadyBetted">
-              <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
-                Withdraw From Bet
-              </button>
-            </div>
+          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked">
+            <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
+              Withdraw From Bet
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Result" disabled="{{ !league.match.finished }}">
+        <div class="demo-tab-content">
+          <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
+          <br>
+          <div class="row justify-content-center">
+            <h3>{{ matchResultText }}</h3>
+          </div>
+          <br><br>
         </div>
       </mat-tab>
       <mat-tab label="Leaderboard" disabled="true">

@@ -8,6 +8,7 @@ export interface Match {
     team1: Team,
     team2: Team,
     stadium?: Stadium,
-    winner?: Team,
-    winBy?: number
+    team1Score: number,
+    team2Score: number,
+    finished: boolean
 }

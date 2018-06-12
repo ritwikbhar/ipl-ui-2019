@@ -7,29 +7,12 @@
     <mat-tab-group class="demo-tab-group col-12">
       <mat-tab label="My Answer">
         <div class="demo-tab-content">
-          <div class="row">
-            <div class="col" id="home-team">
-              <img class="img-thumbnail team-flag float-left" src="{{ league.match.team1.flag }}" />
-              <br>
-              <div class="float-left">
-                <h5>{{ league.match.team1.name }}</h5>
-                <h6>{{ league.match.team1.shortName }}</h6>
-              </div>
-            </div>
-            <div class="col" id="away-team">
-              <img class="img-thumbnail team-flag float-right" src="{{ league.match.team2.flag }}">
-              <br>
-              <div class="float-right">
-                <h5>{{ league.match.team2.name }}</h5>
-                <h6>{{ league.match.team2.shortName }}</h6>
-              </div>
-            </div>
-          </div>
+          <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
           <br>
           <div class="container">
             <h4>Guess the following stats...</h4>
             <ol>
-              <li  *ngFor="let question of questions">
+              <li *ngFor="let question of questions">
                 <div class="row">
                   <p class='col-6'>
                     {{ question.question }}
@@ -42,10 +25,10 @@
               </li>
             </ol>
           </div>
-          <div class="row justify-content-center" *ngIf="!alreadyBetted">
+          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked">
             <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
           </div>
-          <div class="row justify-content-center" *ngIf="alreadyBetted">
+          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked">
             <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
               Withdraw From Bet
             </button>
@@ -53,9 +36,31 @@
         </div>
 
       </mat-tab>
+      <mat-tab label="Answer" disabled="{{ !answersVisible }}">
+        <div class="demo-tab-content">
+          <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
+          <br>
+          <div class="container">
+            <h4>Following are the answers...</h4>
+            <ol>
+              <li *ngFor="let question of questions">
+                <div class="row">
+                  <p class='col-6'>
+                    {{ question.question }}
+                  </p>
+                  <p class='col-2'>
+                    <i class="material-icons" *ngIf="question.answer">check</i>
+                    <i class="material-icons" *ngIf="!question.answer">cancel</i>
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </mat-tab>
       <mat-tab label="Leaderboard" disabled="true">
         <div class="demo-tab-content">
-
+          
         </div>
       </mat-tab>
     </mat-tab-group>
