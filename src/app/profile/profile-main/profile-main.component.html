@@ -1,3 +1,30 @@
-<p>
-  profile-main works!
-</p>
+<app-navbar [title]="title"></app-navbar>
+<br><br><br>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h2 class="card-title">Ritwik Bhar</h2>
+            <div class="card-avatar pull-right">
+              <img class="rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" />
+            </div>
+          </div>
+          <mat-tab-group class="demo-tab-group col-12">
+            <mat-tab label="Profile">
+              <div class="demo-tab-content">
+                <app-profile-card></app-profile-card>
+              </div>
+            </mat-tab>
+            <mat-tab label="Your History">
+              <div class="demo-tab-content">
+                <app-history-card></app-history-card>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
