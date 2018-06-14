@@ -6,13 +6,15 @@ import { ProfileMainComponent } from './profile-main/profile-main.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { HistoryCardComponent } from './history-card/history-card.component';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
     MatTabsModule,
-    WavesModule
+    WavesModule,
+    UserModule
   ],
   declarations: [ProfileMainComponent, ProfileCardComponent, HistoryCardComponent]
 })
