@@ -9,7 +9,7 @@
         <div class="demo-tab-content">
           <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
           <div class="row justify-content-center">
-            <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ (maxVal + minVal) / 2 }}" class="col-6" (input)="onSliderChange($event)"
+            <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ userAnswer }}" class="col-6" (input)="onSliderChange($event)"
               disabled="{{ league.locked }}"></mat-slider>
           </div>
           <p class="text-center">

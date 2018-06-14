@@ -4,6 +4,8 @@ import { MatSliderChange } from '@angular/material/slider';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent, ConfirmationDialogInput, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { Notifyable } from '../../../util/Notifyable';
+import { UserAnswerService } from '../../user-answer.service';
+import { UserChallengeAnswer } from '../../models/UserChallengeAnswer';
 
 @Component({
   selector: 'app-win-predictor-league',
@@ -23,11 +25,25 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   
   private coinsToBet: number;
   private alreadyBetted: boolean;
+  private userAnswer : number;
+  private userAnswerRaw : UserChallengeAnswer;
 
-  constructor(public dialog: MatDialog) { }
+
+  constructor(public dialog: MatDialog, private userAnswerService: UserAnswerService) { }
 
   ngOnInit() {
     let match = this.league.match;
+
+    this.userAnswer = (this.maxVal + this.minVal)/2;
+
+    this.userAnswerService.getUserAnswerForLeague('1', this.league.id).then(userAnswer =>{
+      this.userAnswerRaw = userAnswer;
+      let answer : string[]= userAnswer.answerS.split('-')
+      this.userAnswer += Number.parseInt(answer[1]) - Number.parseInt(answer[0]);
+      this.alreadyBetted = true;
+      this.updateSliderText(this.userAnswer);
+    });
+
     if(match.finished){
       let scoreDiff = match.team1Score - match.team2Score;
       if(scoreDiff === 0){
@@ -58,16 +74,21 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   }
 
   onSliderChange(sliderChangeEvent: MatSliderChange) {
+    this.updateSliderText(sliderChangeEvent.value);
+  }
+
+  updateSliderText(value : number) {
     let median = (this.maxVal + this.minVal) / 2;
-    if (sliderChangeEvent.value === median) {
+    this.userAnswer = value;
+    if (value === median) {
       this.selectedResult = "match would be DRAW";
     }
-    else if (sliderChangeEvent.value < median) {
-      let goalDiff = median - sliderChangeEvent.value;
+    else if (value < median) {
+      let goalDiff = median - value;
       this.selectedResult = this.league.match.team1.name + " will win by " + goalDiff + " goals.";
     }
     else {
-      let goalDiff = sliderChangeEvent.value - median;
+      let goalDiff = value - median;
       this.selectedResult = this.league.match.team2.name + " will win by " + goalDiff + " goals";
     }
   }
@@ -109,6 +130,15 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   }
 
   private continueWithdrawl(): void {
+    this.userAnswerService.deleteUserAnswer(this.userAnswerRaw.id);
+    this.userAnswerRaw = undefined;
+    this.updateSliderText((this.maxVal + this.minVal) / 2);
     this.alreadyBetted = false;
   }
+}
+
+
+interface Answer{
+  team1Score: number,
+  team2Score: number
 }

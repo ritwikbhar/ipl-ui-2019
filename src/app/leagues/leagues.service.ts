@@ -96,6 +96,14 @@ export class LeaguesService {
       matchId: 3,
       cType: "WIN_PREDICTOR",
       locked: true
+    },
+    {
+      id: '5',
+      name: 'Who will win the match?',
+      date: '25-06-2018',
+      matchId: 2,
+      cType: "WIN_PREDICTOR",
+      locked: false
     }
   ];
 

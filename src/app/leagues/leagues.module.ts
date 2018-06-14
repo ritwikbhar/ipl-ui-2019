@@ -21,6 +21,7 @@ import { ConfirmationDialogComponent } from './league-details/confirmation-dialo
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApiModule } from '../api';
 import { CompetingTeamsComponent } from './league-details/competing-teams/competing-teams.component';
+import { UserAnswerService } from './user-answer.service';
 
 
 
@@ -41,8 +42,8 @@ import { CompetingTeamsComponent } from './league-details/competing-teams/compet
     LeagueCardsComponent,
     LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent, BetBtnComponent, ConfirmationDialogComponent, CompetingTeamsComponent
   ],
-  entryComponents:[ConfirmationDialogComponent],
+  entryComponents: [ConfirmationDialogComponent],
   exports: [LeaguesMainComponent],
-  providers: [LeaguesService, MatchService, ConverterService]
+  providers: [LeaguesService, MatchService, ConverterService, UserAnswerService]
 })
 export class LeaguesModule { }
