@@ -5,6 +5,10 @@ import { LeaguesService } from '../../leagues.service';
 import { Notifyable } from '../../../util/Notifyable';
 import { ConfirmationDialogInput, ConfirmationDialogComponent, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserAnswerService } from '../../user-answer.service';
+import { UserAnswer } from '../../models/UserAnswer';
+import { UserChallengeAnswer, AnswerType } from '../../models/UserChallengeAnswer';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-stat-quiz-league',
@@ -17,22 +21,33 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   questions: Question[];
 
-  private coinsToBet : number;
+  private coinsToBet: number;
 
-  private alreadyBetted : boolean;
+  private alreadyBetted: boolean;
 
-  private answersVisible : boolean = true;
+  private answersVisible: boolean = true;
 
-  constructor(private leagueService : LeaguesService, public dialog: MatDialog) { }
+  private userId: String = "1";
+
+  private userAnswer: UserChallengeAnswer;
+
+  constructor(private leagueService: LeaguesService, private userAnswerService: UserAnswerService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.leagueService.getQuestionsForLeague(this.league.id).then(questions=>{
+    this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
       this.questions = questions;
-      questions.forEach(question =>{
-        if(question.answer === null){
+      questions.forEach(question => {
+        if (question.answer === null) {
           this.answersVisible = false;
         }
-      })
+      });
+
+      this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
+        this.userAnswer = userAnswer;
+        this.alreadyBetted = true;
+        this.coinsToBet = this.userAnswer.coinsBet;
+      });
+
     });
   }
 
@@ -56,8 +71,8 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
     this.coinsToBet = event;
 
-    let dialogData : ConfirmationDialogInput = {
-      cointToBet : this.coinsToBet,
+    let dialogData: ConfirmationDialogInput = {
+      cointToBet: this.coinsToBet,
       toNotify: this,
       userId: '1',
       type: ConfirmationType.BET
@@ -69,9 +84,9 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     });
   }
 
-  onWithdrawClicked(){
-    let dialogData : ConfirmationDialogInput = {
-      cointToBet : this.coinsToBet,
+  onWithdrawClicked() {
+    let dialogData: ConfirmationDialogInput = {
+      cointToBet: this.coinsToBet,
       toNotify: this,
       userId: '1',
       type: ConfirmationType.WITHDRAWL
@@ -83,12 +98,61 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     });
   }
 
+  onAnswerChanged(changeEvent : MatSlideToggleChange) {
+    if(!this.userAnswer){
+    
+      this.userAnswer = {
+        id: null,
+        answerType: AnswerType.MULTIPLE,
+        coinsBet: this.coinsToBet,
+        leagueId: this.league.id,
+        matchId: this.league.match.id,
+        userId: this.userId,
+        answer:[]
+      };
+
+      this.questions.forEach(question => {
+        this.userAnswer.answer.push(
+          {
+            questionId: question.id,
+            answer: false
+          }
+        );
+      });
+    }
+
+    let questionId = changeEvent.source.id;
+    let answer = changeEvent.checked;
+
+    let index = this.userAnswer.answer.findIndex(userAnswer=>userAnswer.questionId === questionId);
+    this.userAnswer.answer[index].answer = answer;
+
+  }
+
+  getUserAnswerForQuestion(questionId): boolean {
+    if (this.userAnswer) {
+      let userAnswer = this.userAnswer.answer.find(userAnswer => userAnswer.questionId === questionId);
+      if (userAnswer) {
+        return userAnswer.answer;
+      }
+    }
+    return false;
+  }
+
   private continueWithBet(): void {
-    this.alreadyBetted = true;
+    this.userAnswer.coinsBet = this.coinsToBet;
+    this.userAnswerService.createUserAnswer(this.userAnswer).then(newUserAnswer => {
+      this.userAnswer = newUserAnswer;
+      this.alreadyBetted = true;
+    });    
   }
 
   private continueWithdrawl(): void {
-    this.alreadyBetted = false;
+    this.userAnswerService.deleteUserAnswer(this.userAnswer.id).then(isDeleted =>{
+      if(isDeleted){
+        this.alreadyBetted = false;
+      }
+    })
   }
 
 }

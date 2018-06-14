@@ -8,6 +8,8 @@
       <mat-tab label="My Answer">
         <div class="demo-tab-content">
           <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
+          <br>
+          <h4 *ngIf="alreadyBetted" class="red-text">You have betted {{ userAnswerRaw.coinsBet }} coins for this league</h4>
           <div class="row justify-content-center">
             <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ userAnswer }}" class="col-6" (input)="onSliderChange($event)"
               disabled="{{ league.locked }}"></mat-slider>
@@ -16,7 +18,7 @@
             You think {{ selectedResult }}
           </p>
           <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked">
-            <app-bet-btn (betted)="onBetClicked($event)"></app-bet-btn>
+            <app-bet-btn (betted)="onBetClicked($event)" [coinsBet]="coinsToBet"></app-bet-btn>
           </div>
           <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked">
             <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">

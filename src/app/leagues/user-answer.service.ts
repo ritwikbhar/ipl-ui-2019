@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { UserChallengeAnswer, AnswerType } from './models/UserChallengeAnswer';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class UserAnswerService {
 
-  constructor() { }
+  constructor(private userService : UserService) { }
 
   public getUserAnswerForLeague(userId:String , leagueId: String): Promise<UserChallengeAnswer> {
     
@@ -21,9 +22,24 @@ export class UserAnswerService {
   public deleteUserAnswer(userAnswerId : String): Promise<boolean> {
     return new Promise<boolean>(resolve => {
       let index = this.userAnswers.findIndex(userAnswer=>userAnswer.id === userAnswerId);
+      
+      //TODO remove from UI and put to backend
+      this.userService.incrementWalletBalance(this.userAnswers[index].coinsBet);
+
       this.userAnswers.splice(index, 1);
       resolve(true);
     }); 
+  }
+
+  public createUserAnswer(userAnswer : UserChallengeAnswer) : Promise<UserChallengeAnswer> {
+    return new Promise<UserChallengeAnswer>(resolve => {
+      //TODO remove from UI and put to backend
+      this.userService.decrementWalletBalance(userAnswer.coinsBet);
+
+      userAnswer.id = (Math.random()*15).toString();
+      this.userAnswers.push(userAnswer);
+      resolve(userAnswer);
+    });
   }
 
   private userAnswers : UserChallengeAnswer[] = [
@@ -34,7 +50,7 @@ export class UserAnswerService {
       matchId: "1",
       answerType: AnswerType.SINGLE,
       coinsBet: 50,
-      answerS: '3-1'
+      answerS: '2'
     },
     {
       id: "2",

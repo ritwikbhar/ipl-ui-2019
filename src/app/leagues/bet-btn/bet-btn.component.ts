@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-bet-btn',
@@ -7,13 +7,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class BetBtnComponent implements OnInit {
 
-  coinsBet: number = 50;
+  @Input() coinsBet: number;
 
   @Output() betted: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+    if(!this.coinsBet){
+      this.coinsBet = 50;
+    }
   }
 
   increaseBet() {

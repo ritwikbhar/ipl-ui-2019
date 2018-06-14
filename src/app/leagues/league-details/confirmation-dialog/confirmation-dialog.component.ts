@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Notifyable } from '../../../util/Notifyable';
+import { UserService } from '../../../user/user.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -15,15 +16,19 @@ export class ConfirmationDialogComponent implements OnInit {
   isWithdrawl: boolean;
 
   constructor(
+    private userService : UserService,
     private dialogRef : MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data : ConfirmationDialogInput
   ) { }
 
   ngOnInit() {
-    this.betFeasable = true;
-    this.remainingBalance = 10;
+    
     this.bettedAmount = this.data.cointToBet
     this.isWithdrawl = this.data.type === ConfirmationType.WITHDRAWL;
+    this.userService.getWalletBalance().then(walletBalance => {
+      this.betFeasable = walletBalance >= this.bettedAmount;
+      this.remainingBalance = walletBalance - this.bettedAmount;
+    })
   }
 
   confirmClicked(){
