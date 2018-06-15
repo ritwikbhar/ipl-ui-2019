@@ -12,54 +12,61 @@ export class LeaguesService {
   public getLeagues(): Promise<League[]> {
 
     return new Promise<League[]>(resolve => {
+      //TODO change the locked state to a proper locked
+
       let leagues: League[] = [];
       let totalLeagues = this.leagues.length;
       let leaguesInternarlized = 0;
 
-      this.leagues.forEach(league => {
-        this.matchService.getMatchById(league.matchId).then(match => {
-          let internalizedLeague: League = {
-            id: league.id,
-            cType: league.cType,
-            date: league.date,
-            match: match,
-            name: league.name,
-            locked: league.locked
-          };
-          leagues.push(internalizedLeague);
-          leaguesInternarlized++;
+      this.challengesApi.getChallenges().subscribe(challenges => {
+        challenges.forEach(challenge => {
+          this.matchService.getMatchById(challenge.matchId).then(match => {
+            let internalizedLeague: League = {
+              id: challenge.id,
+              cType: challenge.ctype,
+              date: new Date(challenge.date).getFullYear().toString(),
+              match: match,
+              name: (challenge.ctype == "WIN_PREDICTOR")?"Who is going to win?":(challenge.ctype == "STAT_QUIZ")?"Guess Some Stats...":"",
+              locked: false
+            };
+            leagues.push(internalizedLeague);
+            leaguesInternarlized++;
 
-          if(leaguesInternarlized >= totalLeagues){
-            resolve(leagues);
-          }
-          
+            if (leaguesInternarlized >= totalLeagues) {
+              resolve(leagues);
+            }
+
+          });
+        });
+      });
+
+    });
+
+  }
+
+  public getLeagueById(id: string): Promise<League> {
+    //TODO change the locked state to a proper locked
+    return new Promise<League>(resolve => {
+
+      this.challengesApi.getChallenge(id).subscribe(challenge => {
+        this.matchService.getMatchById(challenge.matchId).then(match => {
+          let internalizedLeague: League = {
+            id: challenge.id,
+            cType: challenge.ctype,
+            date: challenge.date,
+            match: match,
+            name: challenge.name,
+            locked: false
+          };
+          resolve(internalizedLeague);
         });
       });
     });
-
   }
 
-  public getLeagueById(id:string) : Promise<League>{
-    return new Promise<League>(resolve => {
-      let league = this.leagues.filter(league => league.id === id)[0];
-      this.matchService.getMatchById(league.matchId).then(match => {
-        let internalizedLeague: League = {
-          id: league.id,
-          cType: league.cType,
-          date: league.date,
-          match: match,
-          name: league.name,
-          locked: league.locked
-        };
-        resolve(internalizedLeague);
-      });
-      
-    });
-  }
-
-  public getQuestionsForLeague(leagueId:string):Promise<Question[]> {
+  public getQuestionsForLeague(leagueId: string): Promise<Question[]> {
     return new Promise<Question[]>(resolve => {
-      let questions : Question[] = this.questions.filter(question => question.leagueId === leagueId);
+      let questions: Question[] = this.questions.filter(question => question.leagueId === leagueId);
       resolve(questions);
     });
   }
@@ -107,7 +114,7 @@ export class LeaguesService {
     }
   ];
 
-  private questions : Question[] = [
+  private questions: Question[] = [
     {
       id: '1',
       question: 'Will Ramos get a yellow card today?',

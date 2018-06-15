@@ -10,32 +10,41 @@ import { LeaguesService } from '../leagues.service';
 })
 export class LeagueDetailsComponent implements OnInit {
 
-  leagueId : string;
+  leagueId: string;
   league: League;
 
 
-  constructor(private route : ActivatedRoute, private leagueService : LeaguesService) { 
-    route.params.subscribe(params => {
-      this.leagueId = params['id'];
-      this.leagueService.getLeagueById(this.leagueId).then(league=>{
-        this.league = league;
-      });
-    });
+  constructor(private route: ActivatedRoute, private leagueService: LeaguesService) {
   }
 
-  isWinPredictor(){
-    return this.league.cType === "WIN_PREDICTOR";
+  isWinPredictor() {
+    if (this.league) {
+      return this.league.cType === "WIN_PREDICTOR";
+    }
+    return false;
   }
 
-  isStatQuiz(){
-    return this.league.cType === "STAT_QUIZ";
+  isStatQuiz() {
+    if (this.league) {
+      return this.league.cType === "STAT_QUIZ";
+    }
+    return false;
   }
 
-  isFantasyLeague(){
-    return this.league.cType === "FANTASY_LEAGUE";
+  isFantasyLeague() {
+    if (this.league) {
+      return this.league.cType === "FANTASY_LEAGUE";
+    }
+    return false;
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.leagueId = params['id'];
+      this.leagueService.getLeagueById(this.leagueId).then(league => {
+        this.league = league;
+      });
+    });
   }
 
 }

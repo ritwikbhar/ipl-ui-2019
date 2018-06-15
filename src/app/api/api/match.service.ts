@@ -168,7 +168,6 @@ export class MatchService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.get<Match>(`${this.basePath}/matches/${encodeURIComponent(String(id))}`,

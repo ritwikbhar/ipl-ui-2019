@@ -18,14 +18,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import { UserChallengeAnswer } from '../model/userChallengeAnswer';
+import { Question } from '../model/question';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class UserChallengeAnswerService {
+export class QuestionsService {
 
     protected basePath = 'http://localhost:8000/spfever';
     public defaultHeaders = new HttpHeaders();
@@ -57,16 +57,23 @@ export class UserChallengeAnswerService {
 
 
     /**
-     * Creates a new userChallengeAnswer.
-     * 
-     * @param body 
+     * Create a new question for a challenge
+     * Create a new question for a challenge if it is a STAT_QUIZ
+     * @param id Unique id for challenge
+     * @param body the question to be created
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'body', reportProgress?: boolean): Observable<UserChallengeAnswer>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserChallengeAnswer>>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserChallengeAnswer>>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createNewQuestion(id: string, body: Question, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public createNewQuestion(id: string, body: Question, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public createNewQuestion(id: string, body: Question, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public createNewQuestion(id: string, body: Question, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling createNewQuestion.');
+        }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createNewQuestion.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -88,7 +95,7 @@ export class UserChallengeAnswerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<UserChallengeAnswer>(`${this.basePath}/userChallengeAnswers`,
+        return this.httpClient.post<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -100,18 +107,22 @@ export class UserChallengeAnswerService {
     }
 
     /**
-     * Deletes a userChallengeAnswer based on the project id.
-     * Deletes a userChallengeAnswer based on the userChallengeAnswer id from file system.
-     * @param id A userChallengeAnswer’s unique id to delete a userChallengeAnswer
+     * Deletes a question
+     * Deletes a question
+     * @param id Unique id for challenge
+     * @param qId Unique id for question
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUserChallengeAnswer(id: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public deleteUserChallengeAnswer(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public deleteUserChallengeAnswer(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public deleteUserChallengeAnswer(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteQuestion(id: string, qId: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public deleteQuestion(id: string, qId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public deleteQuestion(id: string, qId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public deleteQuestion(id: string, qId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteUserChallengeAnswer.');
+            throw new Error('Required parameter id was null or undefined when calling deleteQuestion.');
+        }
+        if (qId === null || qId === undefined) {
+            throw new Error('Required parameter qId was null or undefined when calling deleteQuestion.');
         }
 
         let headers = this.defaultHeaders;
@@ -130,7 +141,7 @@ export class UserChallengeAnswerService {
             'application/json'
         ];
 
-        return this.httpClient.delete<boolean>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<boolean>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -141,18 +152,22 @@ export class UserChallengeAnswerService {
     }
 
     /**
-     * Retrieves a userChallengeAnswer on ID.
-     * 
-     * @param id A userChallengeAnswer’s unique id
+     * Get a question
+     * Get a question a challenge if it is a STAT_QUIZ
+     * @param id Unique id for challenge
+     * @param qId Unique id for question
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserChallengeAnswer(id: string, observe?: 'body', reportProgress?: boolean): Observable<UserChallengeAnswer>;
-    public getUserChallengeAnswer(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserChallengeAnswer>>;
-    public getUserChallengeAnswer(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserChallengeAnswer>>;
-    public getUserChallengeAnswer(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getQuestion(id: string, qId: string, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public getQuestion(id: string, qId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public getQuestion(id: string, qId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public getQuestion(id: string, qId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getUserChallengeAnswer.');
+            throw new Error('Required parameter id was null or undefined when calling getQuestion.');
+        }
+        if (qId === null || qId === undefined) {
+            throw new Error('Required parameter qId was null or undefined when calling getQuestion.');
         }
 
         let headers = this.defaultHeaders;
@@ -171,7 +186,7 @@ export class UserChallengeAnswerService {
             'application/json'
         ];
 
-        return this.httpClient.get<UserChallengeAnswer>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -182,24 +197,18 @@ export class UserChallengeAnswerService {
     }
 
     /**
-     * Retrieves all UserChallengeAnswers
-     * Retrieves all UserChallengeAnswers
-     * @param filterByUser provide data to filter result
-     * @param filterByChallenge provide data to filter result
+     * Get all the questions for a challenge
+     * Gets all the questions for a challenge if it is a STAT_QUIZ
+     * @param id Unique id for challenge
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserChallengeAnswer>>;
-    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserChallengeAnswer>>>;
-    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserChallengeAnswer>>>;
-    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (filterByUser !== undefined) {
-            queryParameters = queryParameters.set('filterByUser', <any>filterByUser);
-        }
-        if (filterByChallenge !== undefined) {
-            queryParameters = queryParameters.set('filterByChallenge', <any>filterByChallenge);
+    public getQuestions(id: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Question>>;
+    public getQuestions(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Question>>>;
+    public getQuestions(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Question>>>;
+    public getQuestions(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getQuestions.');
         }
 
         let headers = this.defaultHeaders;
@@ -215,11 +224,11 @@ export class UserChallengeAnswerService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
+            'application/json'
         ];
 
-        return this.httpClient.get<Array<UserChallengeAnswer>>(`${this.basePath}/userChallengeAnswers`,
+        return this.httpClient.get<Array<Question>>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -229,19 +238,26 @@ export class UserChallengeAnswerService {
     }
 
     /**
-     * Updates the details of a userChallengeAnswer.
-     * Updates the details of a userChallengeAnswer. 
-     * @param id A userChallengeAnswer’s unique id to update a userChallengeAnswer
-     * @param body 
+     * Updates a qustion
+     * Updates a qustion of a challenge if it is a STAT_QUIZ
+     * @param id Unique id for challenge
+     * @param qId Unique id for question
+     * @param body the question to be created
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUserChallengeAnswer(id: string, body?: UserChallengeAnswer, observe?: 'body', reportProgress?: boolean): Observable<UserChallengeAnswer>;
-    public updateUserChallengeAnswer(id: string, body?: UserChallengeAnswer, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserChallengeAnswer>>;
-    public updateUserChallengeAnswer(id: string, body?: UserChallengeAnswer, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserChallengeAnswer>>;
-    public updateUserChallengeAnswer(id: string, body?: UserChallengeAnswer, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateQuestion(id: string, qId: string, body: Question, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public updateQuestion(id: string, qId: string, body: Question, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public updateQuestion(id: string, qId: string, body: Question, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public updateQuestion(id: string, qId: string, body: Question, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateUserChallengeAnswer.');
+            throw new Error('Required parameter id was null or undefined when calling updateQuestion.');
+        }
+        if (qId === null || qId === undefined) {
+            throw new Error('Required parameter qId was null or undefined when calling updateQuestion.');
+        }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateQuestion.');
         }
 
         let headers = this.defaultHeaders;
@@ -264,7 +280,7 @@ export class UserChallengeAnswerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<UserChallengeAnswer>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,
+        return this.httpClient.put<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,

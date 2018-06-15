@@ -9,15 +9,24 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Stadium } from './stadium';
 
 
 export interface Match {
     id?: string;
     name?: string;
+    type?: Match.TypeEnum;
     date?: string;
     team1?: string;
     team2?: string;
-    stadium?: string;
-    winner?: string;
-    winBy?: string;
+    stadium?: Stadium;
+    team1Result?: number;
+    team2Result?: number;
+}
+export namespace Match {
+    export type TypeEnum = 'GROUP' | 'KNOCKOUT';
+    export const TypeEnum = {
+        GROUP: 'GROUP' as TypeEnum,
+        KNOCKOUT: 'KNOCKOUT' as TypeEnum
+    }
 }

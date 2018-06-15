@@ -11,17 +11,8 @@
  */
 
 
-export interface Challenge {
+export interface Question {
     id?: string;
-    name?: string;
-    date?: string;
-    matchId?: string;
-    ctype?: Challenge.CtypeEnum;
-}
-export namespace Challenge {
-    export type CtypeEnum = 'WIN_PREDICTOR' | 'STAT_QUIZ';
-    export const CtypeEnum = {
-        WINPREDICTOR: 'WIN_PREDICTOR' as CtypeEnum,
-        STATQUIZ: 'STAT_QUIZ' as CtypeEnum
-    }
+    question?: string;
+    answer?: boolean;
 }
