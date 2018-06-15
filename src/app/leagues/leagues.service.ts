@@ -15,28 +15,32 @@ export class LeaguesService {
       //TODO change the locked state to a proper locked
 
       let leagues: League[] = [];
-      let totalLeagues = this.leagues.length;
-      let leaguesInternarlized = 0;
 
       this.challengesApi.getChallenges().subscribe(challenges => {
+        let totalLeagues = challenges.length;
+        let leaguesInternarlized = 0;
         challenges.forEach(challenge => {
           this.matchService.getMatchById(challenge.matchId).then(match => {
-            let internalizedLeague: League = {
-              id: challenge.id,
-              cType: challenge.ctype,
-              date: new Date(challenge.date).getFullYear().toString(),
-              match: match,
-              name: (challenge.ctype == "WIN_PREDICTOR")?"Who is going to win?":(challenge.ctype == "STAT_QUIZ")?"Guess Some Stats...":"",
-              locked: false
-            };
-            leagues.push(internalizedLeague);
             leaguesInternarlized++;
 
-            if (leaguesInternarlized >= totalLeagues) {
-              resolve(leagues);
+            if (match !== null) {
+              let internalizedLeague: League = {
+                id: challenge.id,
+                cType: challenge.ctype,
+                date: new Date(challenge.date).getFullYear().toString(),
+                match: match,
+                name: (challenge.ctype == "WIN_PREDICTOR") ? "Who is going to win?" : (challenge.ctype == "STAT_QUIZ") ? "Guess Some Stats..." : "",
+                locked: false
+              };
+              leagues.push(internalizedLeague);
+
+              if (leaguesInternarlized >= totalLeagues) {
+                resolve(leagues);
+              }
             }
 
           });
+
         });
       });
 

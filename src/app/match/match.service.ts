@@ -16,7 +16,7 @@ export class MatchService {
       this.matchApi.getMatch(matchId.toString()).subscribe(match => {
         let team1Id = match.team1;
         let team2Id = match.team2;
-        if (team1Id != null && team2Id != null) {
+        if (team1Id && team2Id && team1Id != null && team2Id != null) {
           this.getTeamById(team1Id).then(team1 => {
             this.getTeamById(team2Id).then(team2 => {
               let internalizedMatch: Match = {
@@ -33,6 +33,9 @@ export class MatchService {
               resolve(internalizedMatch);
             });
           });
+        }
+        else{
+          resolve(null);
         }
       });
     });
