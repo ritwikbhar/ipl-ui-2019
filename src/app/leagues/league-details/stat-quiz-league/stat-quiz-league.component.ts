@@ -1,14 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { League } from '../../models/League';
-import { Question } from '../../models/Question';
 import { LeaguesService } from '../../leagues.service';
 import { Notifyable } from '../../../util/Notifyable';
 import { ConfirmationDialogInput, ConfirmationDialogComponent, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserAnswerService } from '../../user-answer.service';
-import { UserAnswer } from '../../models/UserAnswer';
-import { UserChallengeAnswer, AnswerType } from '../../models/UserChallengeAnswer';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { UserChallengeAnswer, Question } from '../../../api';
 
 @Component({
   selector: 'app-stat-quiz-league',
@@ -27,13 +25,16 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   private answersVisible: boolean = true;
 
-  private userId: String = "1";
+  private userId: String = "ritwikbhar";
 
   private userAnswer: UserChallengeAnswer;
 
   constructor(private leagueService: LeaguesService, private userAnswerService: UserAnswerService, public dialog: MatDialog) { }
 
   ngOnInit() {
+
+    this.coinsToBet = 50;
+    
     this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
       this.questions = questions;
       questions.forEach(question => {
@@ -45,7 +46,7 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
       this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
         this.userAnswer = userAnswer;
         this.alreadyBetted = true;
-        this.coinsToBet = this.userAnswer.coinsBet;
+        this.coinsToBet = Number.parseInt(this.userAnswer.coinsBet);
       });
 
     });
@@ -103,19 +104,19 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     
       this.userAnswer = {
         id: null,
-        answerType: AnswerType.MULTIPLE,
-        coinsBet: this.coinsToBet,
-        leagueId: this.league.id,
-        matchId: this.league.match.id,
-        userId: this.userId,
-        answer:[]
+        answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
+        coinsBet: this.coinsToBet.toString(),
+        challengeId: this.league.id.toString(),
+        matchId: this.league.match.id.toString(),
+        userid: this.userId.toString(),
+        answers:[]
       };
 
       this.questions.forEach(question => {
-        this.userAnswer.answer.push(
+        this.userAnswer.answers.push(
           {
-            questionId: question.id,
-            answer: false
+            questionId: question.id.toString(),
+            answer: "false"
           }
         );
       });
@@ -124,23 +125,23 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     let questionId = changeEvent.source.id;
     let answer = changeEvent.checked;
 
-    let index = this.userAnswer.answer.findIndex(userAnswer=>userAnswer.questionId === questionId);
-    this.userAnswer.answer[index].answer = answer;
+    let index = this.userAnswer.answers.findIndex(userAnswer=>userAnswer.questionId === questionId);
+    this.userAnswer.answers[index].answer = (answer)?"true":"false";
 
   }
 
   getUserAnswerForQuestion(questionId): boolean {
     if (this.userAnswer) {
-      let userAnswer = this.userAnswer.answer.find(userAnswer => userAnswer.questionId === questionId);
+      let userAnswer = this.userAnswer.answers.find(userAnswer => userAnswer.questionId === questionId);
       if (userAnswer) {
-        return userAnswer.answer;
+        return userAnswer.answer == "true";
       }
     }
     return false;
   }
 
   private continueWithBet(): void {
-    this.userAnswer.coinsBet = this.coinsToBet;
+    this.userAnswer.coinsBet = this.coinsToBet.toString();
     this.userAnswerService.createUserAnswer(this.userAnswer).then(newUserAnswer => {
       this.userAnswer = newUserAnswer;
       this.alreadyBetted = true;

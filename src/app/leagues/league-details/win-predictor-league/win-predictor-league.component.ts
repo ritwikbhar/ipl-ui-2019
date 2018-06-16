@@ -5,9 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent, ConfirmationDialogInput, ConfirmationType } from '../confirmation-dialog/confirmation-dialog.component';
 import { Notifyable } from '../../../util/Notifyable';
 import { UserAnswerService } from '../../user-answer.service';
-import { UserChallengeAnswer, AnswerType } from '../../models/UserChallengeAnswer';
-import { UserAnswer } from '../../models/UserAnswer';
-import { UserService } from '../../../user/user.service';
+import { UserChallengeAnswer } from '../../../api';
 
 @Component({
   selector: 'app-win-predictor-league',
@@ -29,7 +27,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   private alreadyBetted: boolean;
   private userAnswer: number;
   private userAnswerRaw: UserChallengeAnswer;
-  private userId: String = "1";
+  private userId: String = "ritwikbhar";
   private selectedGoalDiff:number = 0;
 
 
@@ -44,7 +42,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       this.userAnswerRaw = userAnswer;
       this.userAnswer -= Number.parseInt(userAnswer.answerS.toString());
       this.alreadyBetted = true;
-      this.coinsToBet = userAnswer.coinsBet;
+      this.coinsToBet = Number.parseInt(userAnswer.coinsBet);
       this.updateSliderText(this.userAnswer);
     });
 
@@ -138,11 +136,12 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
     let userAnswer: UserChallengeAnswer = {
       id: null,
-      coinsBet: this.coinsToBet,
-      answerType: AnswerType.MULTIPLE,
-      leagueId: this.league.id,
-      matchId: this.league.match.id,
-      userId: this.userId
+      coinsBet: this.coinsToBet.toString(),
+      answerType: UserChallengeAnswer.AnswerTypeEnum.SINGLE,
+      challengeId: this.league.id.toString(),
+      matchId: this.league.match.id.toString(),
+      userid: this.userId.toString(),
+      answerS: this.selectedGoalDiff.toString()
     };
 
     this.userAnswerService.createUserAnswer(userAnswer).then(newUserAnswer=>{

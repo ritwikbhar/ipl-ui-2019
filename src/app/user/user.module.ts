@@ -7,6 +7,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserService } from './user.service';
+import { ApiModule } from '../api';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @NgModule({
   imports: [
@@ -16,9 +18,11 @@ import { UserService } from './user.service';
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
-    WavesModule
+    WavesModule,
+    ApiModule
   ],
-  providers : [UserService],
+  providers : [UserService, 
+    CookieService],
   entryComponents : [UserMainComponent],
   declarations: [UserMainComponent]
 })

@@ -13,7 +13,7 @@ export class ProfileMainComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getLoginObserver().subscribe(data=>{
-      console.log(data);
+      console.log("Logged into account: " + data.userId);
     });
   }
 
