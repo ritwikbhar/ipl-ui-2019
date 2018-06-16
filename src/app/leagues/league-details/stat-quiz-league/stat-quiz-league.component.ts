@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserAnswerService } from '../../user-answer.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { UserChallengeAnswer, Question } from '../../../api';
+import { UserService } from '../../../user/user.service';
 
 @Component({
   selector: 'app-stat-quiz-league',
@@ -25,28 +26,40 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   private answersVisible: boolean = true;
 
-  private userId: String = "ritwikbhar";
+  private userId: String;
+  private apiKey: String;
 
   private userAnswer: UserChallengeAnswer;
 
-  constructor(private leagueService: LeaguesService, private userAnswerService: UserAnswerService, public dialog: MatDialog) { }
+  constructor(
+    private leagueService: LeaguesService,
+    private userAnswerService: UserAnswerService,
+    private userService: UserService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
 
-    this.coinsToBet = 50;
-    
-    this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
-      this.questions = questions;
-      questions.forEach(question => {
-        if (question.answer === null) {
-          this.answersVisible = false;
-        }
-      });
+    this.userService.getLoginObserver().subscribe(loginResponse => {
 
-      this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
-        this.userAnswer = userAnswer;
-        this.alreadyBetted = true;
-        this.coinsToBet = Number.parseInt(this.userAnswer.coinsBet);
+      this.userId = loginResponse.userId;
+      this.apiKey = loginResponse.apiKey;
+
+      this.coinsToBet = 50;
+
+      this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
+        this.questions = questions;
+        questions.forEach(question => {
+          if (question.answer === null) {
+            this.answersVisible = false;
+          }
+        });
+
+        this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
+          this.userAnswer = userAnswer;
+          this.alreadyBetted = true;
+          this.coinsToBet = Number.parseInt(this.userAnswer.coinsBet);
+        });
+
       });
 
     });
@@ -99,9 +112,9 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     });
   }
 
-  onAnswerChanged(changeEvent : MatSlideToggleChange) {
-    if(!this.userAnswer){
-    
+  onAnswerChanged(changeEvent: MatSlideToggleChange) {
+    if (!this.userAnswer) {
+
       this.userAnswer = {
         id: null,
         answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
@@ -109,7 +122,7 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
         challengeId: this.league.id.toString(),
         matchId: this.league.match.id.toString(),
         userid: this.userId.toString(),
-        answers:[]
+        answers: []
       };
 
       this.questions.forEach(question => {
@@ -125,8 +138,8 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     let questionId = changeEvent.source.id;
     let answer = changeEvent.checked;
 
-    let index = this.userAnswer.answers.findIndex(userAnswer=>userAnswer.questionId === questionId);
-    this.userAnswer.answers[index].answer = (answer)?"true":"false";
+    let index = this.userAnswer.answers.findIndex(userAnswer => userAnswer.questionId === questionId);
+    this.userAnswer.answers[index].answer = (answer) ? "true" : "false";
 
   }
 
@@ -145,12 +158,12 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     this.userAnswerService.createUserAnswer(this.userAnswer).then(newUserAnswer => {
       this.userAnswer = newUserAnswer;
       this.alreadyBetted = true;
-    });    
+    });
   }
 
   private continueWithdrawl(): void {
-    this.userAnswerService.deleteUserAnswer(this.userAnswer.id).then(isDeleted =>{
-      if(isDeleted){
+    this.userAnswerService.deleteUserAnswer(this.userAnswer.id).then(isDeleted => {
+      if (isDeleted) {
         this.alreadyBetted = false;
       }
     })

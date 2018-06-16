@@ -1,0 +1,30 @@
+<div class="container">
+  <h3>Today's Matches</h3>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card">
+        <!--Card content-->
+        <div class="card-body">
+          <div class="row">
+            <div id="home-team" class="col">
+              <img class="img-thumbnail team-flag float-left" src="{{ cardDetails.homeTeam.flag }}">
+              <br>
+              <span class="float-left">{{ cardDetails.homeTeam.shortName }}</span>
+            </div>
+            <div id="away-team" class="col">
+              <img class="img-thumbnail team-flag float-right" src="{{ cardDetails.awayTeam.flag }}">
+              <br>
+              <span class="float-right">{{ cardDetails.awayTeam.shortName }}</span>
+            </div>
+          </div>
+          <!--Title-->
+          <h4 class="card-title">Card title</h4>
+          <!--Text-->
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary waves-light" mdbWavesEffect>Button</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

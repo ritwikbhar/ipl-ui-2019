@@ -6,7 +6,7 @@ import { ChallengeService as ChallegeApi, QuestionsService as QuestionApi, Quest
 @Injectable()
 export class LeaguesService {
 
-  constructor(private matchService: MatchService, private challengesApi: ChallegeApi, private questionApi : QuestionApi) { }
+  constructor(private matchService: MatchService, private challengesApi: ChallegeApi, private questionApi: QuestionApi) { }
 
   public getLeagues(): Promise<League[]> {
 
@@ -34,6 +34,7 @@ export class LeaguesService {
               leagues.push(internalizedLeague);
 
               if (leaguesInternarlized >= totalLeagues) {
+                leagues = leagues.sort((a, b) => Date.parse(a.match.date.toString()) - Date.parse(b.match.date.toString()))
                 resolve(leagues);
               }
             }

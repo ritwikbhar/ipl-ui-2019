@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../user/user.service';
 
 @Component({
   selector: 'app-leagues-main',
@@ -8,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class LeaguesMainComponent implements OnInit {
 
   title="Leagues";
+
+  private username : string;
+  private apiKey : string;
   
-  constructor() { }
+  constructor(private userService : UserService) { }
 
   ngOnInit() {
+    this.userService.getLoginObserver().subscribe(loginResponse => {
+      this.username = loginResponse.userId;
+      this.apiKey = loginResponse.apiKey;
+    });
   }
 
 }

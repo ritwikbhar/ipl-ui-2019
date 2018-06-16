@@ -15,6 +15,9 @@ export class UserAnswerService {
       this.userChallengeAnswerApi.getUserChallengeAnswers(userId.toString(), leagueId.toString())
         .subscribe(filteredUserChallengeAnswers => {
 
+          //Temporary fix as server response is not proper
+          filteredUserChallengeAnswers = filteredUserChallengeAnswers.filter(answer => answer.challengeId == leagueId);
+
           if(filteredUserChallengeAnswers.length >= 1){
             resolve(filteredUserChallengeAnswers[0]);
           }

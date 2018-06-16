@@ -39,6 +39,9 @@ export class UserService {
           userId: savedLoginResponse.userId
         };
 
+        this.userId = loginResponse.userId;
+        this.apiKey = loginResponse.apiKey;
+
         this.notifyObservers(loginResponse);
       }
       else {

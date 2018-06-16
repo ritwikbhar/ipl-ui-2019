@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../../api';
 
 @Component({
   selector: 'app-table-view',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableViewComponent implements OnInit {
 
-  players = [
+  /*players = [
     {
       name: "Shankarmurthy Bhat",
       coins: 500,
@@ -26,7 +27,10 @@ export class TableViewComponent implements OnInit {
       image: "https://image.flaticon.com/icons/svg/163/163828.svg",
       rank: 3
     },
-  ];
+  ];*/
+
+  @Input() players : User[];
+  
   constructor() { }
 
   ngOnInit() {

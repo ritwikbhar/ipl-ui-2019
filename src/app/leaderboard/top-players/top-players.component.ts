@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../../api';
 
 @Component({
   selector: 'app-top-players',
@@ -7,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopPlayersComponent implements OnInit {
 
-  winnerPlayerName: string = "Shankarmurthy";
-  runnersUpPlayerName: string = "Adithya";
+  @Input() winnerPlayer: User;
+  @Input() runnersUpPlayer: User;
 
   constructor() { }
 
