@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatchService } from '../../../match/match.service';
+import { Match } from '../../../match/models/Match';
 
 @Component({
   selector: 'app-todays-matches',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodaysMatchesComponent implements OnInit {
 
-  constructor() { }
+  matches : Match[];
+
+  constructor(private matchService : MatchService) { }
 
   ngOnInit() {
+    this.matchService.getMatchesForToday().then(matches => {
+      this.matches = matches;
+      console.log("Matches received", this.matches);
+    });
   }
 
 }

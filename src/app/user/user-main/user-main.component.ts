@@ -14,15 +14,15 @@ export class UserMainComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
 
-  selectedTabIndex : number = 0;
+  selectedTabIndex: number = 0;
 
-  signUpName : string;
-  email : string;
+  signUpName: string;
+  email: string;
   signUpPassword: string;
   password: string;
 
-  signUpLabelVisible : boolean;
-  signUpLabelText : string;
+  signUpLabelVisible: boolean;
+  signUpLabelText: string;
 
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<UserMainComponent>,
@@ -50,10 +50,17 @@ export class UserMainComponent implements OnInit {
   }
 
   onLoginSubmit() {
-    this.data.callback({
-      userId: "ritwikbhar",
-      apiKey: "sample-api-key",
-      expiry: new Date(Date.now() +3600)
+
+    this.data.userService.login(this.email, this.password).then(validatedUser => {
+
+      this.data.callback({
+        userId: this.email,
+        apiKey: validatedUser.jwtToken,
+        expiry: new Date(Date.now() + 3600)
+      })
+
+    }).catch(err => {
+
     });
     this.dialogRef.close();
   }
@@ -71,6 +78,6 @@ export class UserMainComponent implements OnInit {
 }
 
 export interface UserMainComponentInput {
-  userService : UserService,
-  callback : (loginResponse : LoginResponse) => void
+  userService: UserService,
+  callback: (loginResponse: LoginResponse) => void
 }

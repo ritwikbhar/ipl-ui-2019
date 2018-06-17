@@ -6,3 +6,4 @@ export * from './team';
 export * from './user';
 export * from './userAnswer';
 export * from './userChallengeAnswer';
+export * from './validatedUser';

@@ -183,7 +183,6 @@ export class QuestionsService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.get<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
@@ -224,7 +223,6 @@ export class QuestionsService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.get<Array<Question>>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions`,

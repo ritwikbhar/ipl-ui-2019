@@ -15,7 +15,7 @@ export class LeaderboardMainComponent implements OnInit {
 
   ngOnInit() {
     this.userApi.getUsers().toPromise().then(users => {
-      this.users = users.sort((a, b) => Number.parseInt(a.coins) - Number.parseInt(b.coins));
+      this.users = users.sort((a, b) => Number.parseInt(b.coins) - Number.parseInt(a.coins));
     });
   }
 

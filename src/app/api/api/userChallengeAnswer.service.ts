@@ -127,7 +127,6 @@ export class UserChallengeAnswerService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.delete<boolean>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,

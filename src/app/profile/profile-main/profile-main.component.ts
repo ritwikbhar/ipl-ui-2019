@@ -8,13 +8,24 @@ import { UserService } from '../../user/user.service';
 })
 export class ProfileMainComponent implements OnInit {
   title = 'My profile';
+
+  displayName : string;
+  coins : number;
+  email: string;
   
   constructor(private userService : UserService) { }
 
   ngOnInit() {
-    this.userService.getLoginObserver().subscribe(data=>{
-      console.log("Logged into account: " + data.userId);
+    this.userService.getLoginObserver().subscribe(loginResponse=>{
+
+      this.userService.getUser(loginResponse.userId).then(user => {
+        this.displayName = user.displayName;
+        this.coins = Number.parseInt(user.coins);
+        this.email = user.email;
+      })
+      
     });
+    this.userService.checkLogin();
   }
 
 }

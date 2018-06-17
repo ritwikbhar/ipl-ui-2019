@@ -63,6 +63,8 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
       });
 
     });
+
+    this.userService.checkLogin()
   }
 
   /**

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../models/League';
 import { LeaguesService } from '../leagues.service';
+import { UserService } from '../../user/user.service';
 
 @Component({
   selector: 'app-league-details',
@@ -14,7 +15,21 @@ export class LeagueDetailsComponent implements OnInit {
   league: League;
 
 
-  constructor(private route: ActivatedRoute, private leagueService: LeaguesService) {
+
+
+  constructor(private route: ActivatedRoute, private leagueService: LeaguesService, private userService : UserService) {
+  }
+
+  ngOnInit() {
+    this.userService.getLoginObserver().subscribe(loginResponse => {
+      this.route.params.subscribe(params => {
+        this.leagueId = params['id'];
+        this.leagueService.getLeagueById(this.leagueId).then(league => {
+          this.league = league;
+        });
+      });
+    });
+    this.userService.checkLogin();
   }
 
   isWinPredictor() {
@@ -37,14 +52,4 @@ export class LeagueDetailsComponent implements OnInit {
     }
     return false;
   }
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.leagueId = params['id'];
-      this.leagueService.getLeagueById(this.leagueId).then(league => {
-        this.league = league;
-      });
-    });
-  }
-
 }

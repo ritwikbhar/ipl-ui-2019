@@ -216,7 +216,6 @@ export class ChallengeService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.get<Challenge>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}`,

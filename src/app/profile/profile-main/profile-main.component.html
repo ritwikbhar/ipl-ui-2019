@@ -6,15 +6,12 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h2 class="card-title">Ritwik Bhar</h2>
-            <div class="card-avatar pull-right">
-              <img class="rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" />
-            </div>
+            <h2 class="card-title"> {{ displayName }}</h2>
           </div>
           <mat-tab-group class="demo-tab-group col-12">
             <mat-tab label="Profile">
               <div class="demo-tab-content">
-                <app-profile-card></app-profile-card>
+                <app-profile-card [email]="email" [coins]="coins"></app-profile-card>
               </div>
             </mat-tab>
             <mat-tab label="Your History">

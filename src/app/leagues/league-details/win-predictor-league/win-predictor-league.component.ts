@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent, ConfirmationDialogInput, ConfirmationType 
 import { Notifyable } from '../../../util/Notifyable';
 import { UserAnswerService } from '../../user-answer.service';
 import { UserChallengeAnswer } from '../../../api';
+import { UserService } from '../../../user/user.service';
 
 @Component({
   selector: 'app-win-predictor-league',
@@ -27,37 +28,47 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   private alreadyBetted: boolean;
   private userAnswer: number;
   private userAnswerRaw: UserChallengeAnswer;
-  private userId: String = "ritwikbhar";
-  private selectedGoalDiff:number = 0;
+  private userId: string;
+  private apiKey: string;
+  private selectedGoalDiff: number = 0;
 
 
-  constructor(public dialog: MatDialog, private userAnswerService: UserAnswerService) { }
+  constructor(public dialog: MatDialog, private userAnswerService: UserAnswerService, private userService: UserService) { }
 
   ngOnInit() {
-    let match = this.league.match;
 
-    this.userAnswer = (this.maxVal + this.minVal) / 2;
+    this.userService.getLoginObserver().subscribe(loginResponse => {
+      this.userId = loginResponse.userId;
+      this.apiKey = loginResponse.apiKey;
 
-    this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
-      this.userAnswerRaw = userAnswer;
-      this.userAnswer -= Number.parseInt(userAnswer.answerS.toString());
-      this.alreadyBetted = true;
-      this.coinsToBet = Number.parseInt(userAnswer.coinsBet);
-      this.updateSliderText(this.userAnswer);
+
+      let match = this.league.match;
+
+      this.userAnswer = (this.maxVal + this.minVal) / 2;
+
+      this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
+        this.userAnswerRaw = userAnswer;
+        this.userAnswer -= Number.parseInt(userAnswer.answerS.toString());
+        this.alreadyBetted = true;
+        this.coinsToBet = Number.parseInt(userAnswer.coinsBet);
+        this.updateSliderText(this.userAnswer);
+      });
+
+      if (match.finished) {
+        let scoreDiff = match.team1Score - match.team2Score;
+        if (scoreDiff === 0) {
+          this.matchResultText = "The match was Draw";
+        }
+        else if (scoreDiff > 0) {
+          this.matchResultText = match.team1.name + " won by " + Math.abs(scoreDiff) + " goals";
+        }
+        else {
+          this.matchResultText = match.team2.name + " won by " + Math.abs(scoreDiff) + " goals";
+        }
+      }
     });
+    this.userService.checkLogin();
 
-    if (match.finished) {
-      let scoreDiff = match.team1Score - match.team2Score;
-      if (scoreDiff === 0) {
-        this.matchResultText = "The match was Draw";
-      }
-      else if (scoreDiff > 0) {
-        this.matchResultText = match.team1.name + " won by " + Math.abs(scoreDiff) + " goals";
-      }
-      else {
-        this.matchResultText = match.team2.name + " won by " + Math.abs(scoreDiff) + " goals";
-      }
-    }
   }
 
   /**
@@ -144,7 +155,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       answerS: this.selectedGoalDiff.toString()
     };
 
-    this.userAnswerService.createUserAnswer(userAnswer).then(newUserAnswer=>{
+    this.userAnswerService.createUserAnswer(userAnswer).then(newUserAnswer => {
       this.userAnswerRaw = newUserAnswer;
     });
 

@@ -22,7 +22,7 @@ export class LeaguesService {
           this.matchService.getMatchById(challenge.matchId).then(match => {
             leaguesInternarlized++;
 
-            if (match !== null) {
+            if (match !== null && match.team1 != null && match.team2 != null) {
               let internalizedLeague: League = {
                 id: challenge.id,
                 cType: challenge.ctype,

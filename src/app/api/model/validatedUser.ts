@@ -11,7 +11,7 @@
  */
 
 
-export interface QChallenge {
-    question?: string;
-    answer?: string;
+export interface ValidatedUser {
+    jwtToken?: string;
+    role?: string;
 }

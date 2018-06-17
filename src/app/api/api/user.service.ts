@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs/Observable';
 
 import { User } from '../model/user';
+import { ValidatedUser } from '../model/validatedUser';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -171,7 +172,6 @@ export class UserService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.get<User>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
@@ -228,9 +228,9 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(email: string, password: string, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public login(email: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public login(email: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public login(email: string, password: string, observe?: 'body', reportProgress?: boolean): Observable<ValidatedUser>;
+    public login(email: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ValidatedUser>>;
+    public login(email: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ValidatedUser>>;
     public login(email: string, password: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (email === null || email === undefined) {
             throw new Error('Required parameter email was null or undefined when calling login.');
@@ -262,7 +262,7 @@ export class UserService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<User>>(`${this.basePath}/users/login`,
+        return this.httpClient.get<ValidatedUser>(`${this.basePath}/users/login`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
