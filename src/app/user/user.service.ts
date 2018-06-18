@@ -17,14 +17,11 @@ export class UserService {
     });
 
     this.checkLogin();
-
-    setInterval(() => {
-      this.checkLogin();
-    }, 50000);
   }
 
   private observers: Observer<LoginResponse>[];
   private loginObservervable: Observable<LoginResponse>;
+  private loginResponse : LoginResponse;
   private userId: string;
   private apiKey: string;
 
