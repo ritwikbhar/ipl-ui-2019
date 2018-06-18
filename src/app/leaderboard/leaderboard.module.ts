@@ -5,12 +5,14 @@ import { ComponentsModule } from '../components/components.module';
 import { LeaderboardMainComponent } from './leaderboard-main/leaderboard-main.component';
 import { TopPlayersComponent } from './top-players/top-players.component';
 import { TableViewComponent } from './table-view/table-view.component';
+import { ApiModule } from '../api';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
-    WavesModule
+    WavesModule,
+    ApiModule
   ],
   declarations: [LeaderboardMainComponent, TopPlayersComponent, TableViewComponent]
 })

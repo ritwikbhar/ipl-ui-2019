@@ -14,6 +14,7 @@ export class ConfirmationDialogComponent implements OnInit {
   remainingBalance : number;
   bettedAmount: number;
   isWithdrawl: boolean;
+  walletBalance : number;
 
   constructor(
     private userService : UserService,
@@ -27,6 +28,7 @@ export class ConfirmationDialogComponent implements OnInit {
     this.isWithdrawl = this.data.type === ConfirmationType.WITHDRAWL;
     this.userService.getWalletBalance().then(walletBalance => {
       this.betFeasable = walletBalance >= this.bettedAmount;
+      this.walletBalance = walletBalance;
       this.remainingBalance = walletBalance - this.bettedAmount;
     })
   }

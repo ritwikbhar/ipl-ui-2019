@@ -5,6 +5,8 @@ import { Configuration } from './configuration';
 
 import { ChallengeService } from './api/challenge.service';
 import { MatchService } from './api/match.service';
+import { QuestionsService } from './api/questions.service';
+import { TeamsService } from './api/teams.service';
 import { UserService } from './api/user.service';
 import { UserChallengeAnswerService } from './api/userChallengeAnswer.service';
 
@@ -15,6 +17,8 @@ import { UserChallengeAnswerService } from './api/userChallengeAnswer.service';
   providers: [
     ChallengeService,
     MatchService,
+    QuestionsService,
+    TeamsService,
     UserService,
     UserChallengeAnswerService ]
 })

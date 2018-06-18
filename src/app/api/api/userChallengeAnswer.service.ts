@@ -127,103 +127,10 @@ export class UserChallengeAnswerService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
         return this.httpClient.delete<boolean>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,
             {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Finds answers by challenge id
-     * 
-     * @param challengeId challengeId values that need to be considered for filter
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public filterByChallengeId(challengeId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserChallengeAnswer>>;
-    public filterByChallengeId(challengeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserChallengeAnswer>>>;
-    public filterByChallengeId(challengeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserChallengeAnswer>>>;
-    public filterByChallengeId(challengeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (challengeId === null || challengeId === undefined) {
-            throw new Error('Required parameter challengeId was null or undefined when calling filterByChallengeId.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (challengeId !== undefined) {
-            queryParameters = queryParameters.set('challengeId', <any>challengeId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-
-        return this.httpClient.get<Array<UserChallengeAnswer>>(`${this.basePath}/userChallengeAnswers/filterByChallengeId`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Finds UserChallengeAnswer by user id
-     * 
-     * @param userId userId to filter by
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public filterByUserId(userId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserChallengeAnswer>>;
-    public filterByUserId(userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserChallengeAnswer>>>;
-    public filterByUserId(userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserChallengeAnswer>>>;
-    public filterByUserId(userId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling filterByUserId.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (userId !== undefined) {
-            queryParameters = queryParameters.set('userId', <any>userId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-
-        return this.httpClient.get<Array<UserChallengeAnswer>>(`${this.basePath}/userChallengeAnswers/filterByUserId`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -276,13 +183,23 @@ export class UserChallengeAnswerService {
     /**
      * Retrieves all UserChallengeAnswers
      * Retrieves all UserChallengeAnswers
+     * @param filterByUser provide data to filter result
+     * @param filterByChallenge provide data to filter result
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserChallengeAnswers(observe?: 'body', reportProgress?: boolean): Observable<Array<UserChallengeAnswer>>;
-    public getUserChallengeAnswers(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserChallengeAnswer>>>;
-    public getUserChallengeAnswers(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserChallengeAnswer>>>;
-    public getUserChallengeAnswers(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserChallengeAnswer>>;
+    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserChallengeAnswer>>>;
+    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserChallengeAnswer>>>;
+    public getUserChallengeAnswers(filterByUser?: string, filterByChallenge?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filterByUser !== undefined) {
+            queryParameters = queryParameters.set('filterByUser', <any>filterByUser);
+        }
+        if (filterByChallenge !== undefined) {
+            queryParameters = queryParameters.set('filterByChallenge', <any>filterByChallenge);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -301,6 +218,7 @@ export class UserChallengeAnswerService {
 
         return this.httpClient.get<Array<UserChallengeAnswer>>(`${this.basePath}/userChallengeAnswers`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

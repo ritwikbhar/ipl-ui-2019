@@ -8,10 +8,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr  *ngFor="let player of players">
-      <th scope="row"> {{ player.rank }} </th>
+    <tr  *ngFor="let player of players; let i = index">
+      <td scope="row">{{ i + 1 }}</td>
       <td><img src="{{ player.image }}" alt="..." class="rounded-circle user-img"></td>
-      <td>{{ player.name }}</td>
+      <td>{{ player.displayName }}</td>
       <td>{{ player.coins }}</td>
     </tr>
   </tbody>

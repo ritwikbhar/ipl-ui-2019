@@ -16,5 +16,12 @@ export interface Challenge {
     name?: string;
     date?: string;
     matchId?: string;
-    ctype?: string;
+    ctype?: Challenge.CtypeEnum;
+}
+export namespace Challenge {
+    export type CtypeEnum = 'WIN_PREDICTOR' | 'STAT_QUIZ';
+    export const CtypeEnum = {
+        WINPREDICTOR: 'WIN_PREDICTOR' as CtypeEnum,
+        STATQUIZ: 'STAT_QUIZ' as CtypeEnum
+    }
 }

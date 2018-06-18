@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { PaginationComponent } from './pagination/pagination.component';
     NavbarComponent,
     SidebarComponent,
     PaginationComponent
+  ],
+  providers: [
+    CookieService
   ],
   exports: [
     FooterComponent,

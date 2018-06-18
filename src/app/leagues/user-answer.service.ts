@@ -1,79 +1,44 @@
 import { Injectable } from '@angular/core';
-import { UserChallengeAnswer, AnswerType } from './models/UserChallengeAnswer';
 import { UserService } from '../user/user.service';
+import { UserChallengeAnswerService as UserChallengeAnswerApi } from '../api/api/api';
+import { UserChallengeAnswer } from '../api';
 
 @Injectable()
 export class UserAnswerService {
 
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private userChallengeAnswerApi : UserChallengeAnswerApi) { }
 
   public getUserAnswerForLeague(userId:String , leagueId: String): Promise<UserChallengeAnswer> {
     
     return new Promise<UserChallengeAnswer>(resolve => {
-      let userAnswer = this.userAnswers.filter(
-        userAnswer => userAnswer.leagueId === leagueId && userAnswer.userId === userId
-      )[0];
-      if(userAnswer){
-        resolve(userAnswer);
-      }
+
+      this.userChallengeAnswerApi.getUserChallengeAnswers(userId.toString(), leagueId.toString())
+        .subscribe(filteredUserChallengeAnswers => {
+
+          //Temporary fix as server response is not proper
+          filteredUserChallengeAnswers = filteredUserChallengeAnswers.filter(answer => answer.challengeId == leagueId);
+
+          if(filteredUserChallengeAnswers.length >= 1){
+            resolve(filteredUserChallengeAnswers[0]);
+          }
+          
+      });
     });
   }
 
   public deleteUserAnswer(userAnswerId : String): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      let index = this.userAnswers.findIndex(userAnswer=>userAnswer.id === userAnswerId);
-      
-      //TODO remove from UI and put to backend
-      this.userService.incrementWalletBalance(this.userAnswers[index].coinsBet);
-
-      this.userAnswers.splice(index, 1);
-      resolve(true);
+      this.userChallengeAnswerApi.deleteUserChallengeAnswer(userAnswerId.toString()).subscribe(isDeleted => {
+        resolve(isDeleted);
+      });
     }); 
   }
 
   public createUserAnswer(userAnswer : UserChallengeAnswer) : Promise<UserChallengeAnswer> {
     return new Promise<UserChallengeAnswer>(resolve => {
-      //TODO remove from UI and put to backend
-      this.userService.decrementWalletBalance(userAnswer.coinsBet);
-
-      userAnswer.id = (Math.random()*15).toString();
-      this.userAnswers.push(userAnswer);
-      resolve(userAnswer);
+      this.userChallengeAnswerApi.createUserChallengeAnswer(userAnswer).subscribe(newUserAnswer => {
+        resolve(newUserAnswer);
+      });
     });
   }
-
-  private userAnswers : UserChallengeAnswer[] = [
-    {
-      id: "1",
-      userId: "1",
-      leagueId: "1",
-      matchId: "1",
-      answerType: AnswerType.SINGLE,
-      coinsBet: 50,
-      answerS: '2'
-    },
-    {
-      id: "2",
-      userId: "1",
-      leagueId: "2",
-      matchId: "2",
-      answerType: AnswerType.MULTIPLE,
-      coinsBet: 200,
-      answer: [
-        {
-          questionId: "1",
-          answer: true
-        },
-        {
-          questionId: "2",
-          answer: false
-        },
-        {
-          questionId: "3",
-          answer: true
-        }
-      ]
-    }
-  ]
-
 }

@@ -13,6 +13,7 @@ import { UserAnswer } from './userAnswer';
 
 
 export interface UserChallengeAnswer {
+    id?: string;
     userid?: string;
     matchId?: string;
     challengeId?: string;

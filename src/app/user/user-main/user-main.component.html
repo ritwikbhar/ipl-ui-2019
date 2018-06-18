@@ -1,17 +1,17 @@
 <!-- Login form -->
-<mat-tab-group class="demo-tab-group col-12">
+<mat-tab-group class="demo-tab-group col-12" [selectedIndex]="selectedTabIndex">
   <mat-tab label="Login">
     <div class="demo-tab-content">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
-          <input type="text" formControlName="defaultFormEmail" id="defaultForm-email" class="form-control" mdbInputDirective>
+          <input type="text" formControlName="email" id="defaultForm-email" class="form-control" mdbInputDirective [(ngModel)]="email">
           <label for="defaultForm-email">Your email</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" formControlName="defaultFormPass" id="defaultForm-pass" class="form-control" mdbInputDirective>
+          <input type="password" formControlName="password" id="defaultForm-pass" class="form-control" mdbInputDirective [(ngModel)]="password">
           <label for="defaultForm-pass">Your password</label>
         </div>
 
@@ -24,21 +24,22 @@
   <mat-tab label="Sign up">
     <div class="demo-tab-content">
       <!-- Register form -->
-      <form [formGroup]="registerForm">
+      <form [formGroup]="registerForm" (ngSubmit)="onSignupSubmit()">
+        <p class="h5 text-center mb-4">Sign up</p>
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
-          <input type="text" formControlName="orangeFormName" id="orangeForm-name" class="form-control" mdbInputDirective>
+          <input type="text" formControlName="name" id="orangeForm-name" class="form-control" [(ngModel)]="signUpName" mdbInputDirective>
           <label for="orangeForm-name">Your name</label>
         </div>
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
-          <input type="text" formControlName="orangeFormEmail" id="orangeForm-email" class="form-control" mdbInputDirective>
+          <input type="text" formControlName="email" id="orangeForm-email" class="form-control" [(ngModel)]="email" mdbInputDirective>
           <label for="orangeForm-email">Your email</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" formControlName="orangeFormPass" id="orangeForm-pass" class="form-control" mdbInputDirective>
+          <input type="password" formControlName="password" id="orangeForm-pass" class="form-control" [(ngModel)]="signUpPassword" mdbInputDirective>
           <label for="orangeForm-pass">Your password</label>
         </div>
 
@@ -47,7 +48,7 @@
           <input type="password" formControlName="orangeFormPass" id="orangeForm-pass" class="form-control" mdbInputDirective>
           <label for="orangeForm-pass">Confirm password</label>
         </div>
-
+        <p class="red-text" *ngIf="signUpLabelVisible">{{ signUpLabelText }}</p>s
         <div class="text-center">
           <input type="submit" class="btn btn-warning btn-rounded waves-light" mdbWavesEffect value="Sign up">
         </div>
