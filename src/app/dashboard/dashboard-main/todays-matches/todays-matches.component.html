@@ -4,7 +4,7 @@
     <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let match of matches">
       <div class="card">
         <!--Card content-->
-        <div class="card-body">
+        <div class="card-body" *ngIf="match.team1 != null && match.team2 != null">
           <div class="row justify-content-md-center">
             <div id="home-team" class="col">
               <img class="img-thumbnail team-flag float-left" src="{{ match.team1.flag }}">

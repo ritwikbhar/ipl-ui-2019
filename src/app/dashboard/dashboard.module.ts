@@ -7,6 +7,8 @@ import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 import { TodaysMatchesComponent } from './dashboard-main/todays-matches/todays-matches.component';
 import { TopLeagueComponent } from './dashboard-main/top-league/top-league.component';
 import { MatchModule } from '../match/match.module';
+import { UserModule } from '../user/user.module';
+import { LeaguesModule } from '../leagues/leagues.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { MatchModule } from '../match/match.module';
     ComponentsModule,
     CarouselModule,
     WavesModule,
-    MatchModule
+    MatchModule,
+    UserModule,
+    LeaguesModule
   ],
   declarations: [DashboardMainComponent, CarouselComponent, TodaysMatchesComponent, TopLeagueComponent],
   exports: [DashboardMainComponent]

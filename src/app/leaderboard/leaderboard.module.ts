@@ -6,13 +6,15 @@ import { LeaderboardMainComponent } from './leaderboard-main/leaderboard-main.co
 import { TopPlayersComponent } from './top-players/top-players.component';
 import { TableViewComponent } from './table-view/table-view.component';
 import { ApiModule } from '../api';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
     WavesModule,
-    ApiModule
+    ApiModule,
+    UserModule
   ],
   declarations: [LeaderboardMainComponent, TopPlayersComponent, TableViewComponent]
 })

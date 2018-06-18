@@ -45,7 +45,7 @@ import { UserService } from '../user/user.service';
     LeagueCardComponent, LeagueDetailsComponent, WinPredictorLeagueComponent, StatQuizLeagueComponent, FantasyLeagueComponent, BetBtnComponent, ConfirmationDialogComponent, CompetingTeamsComponent
   ],
   entryComponents: [ConfirmationDialogComponent],
-  exports: [LeaguesMainComponent],
+  exports: [LeaguesMainComponent, LeagueCardComponent],
   providers: [LeaguesService, MatchService, ConverterService, UserAnswerService, UserService]
 })
 export class LeaguesModule { }

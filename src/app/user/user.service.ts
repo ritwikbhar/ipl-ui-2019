@@ -21,9 +21,11 @@ export class UserService {
 
   private observers: Observer<LoginResponse>[];
   private loginObservervable: Observable<LoginResponse>;
-  private loginResponse : LoginResponse;
+  private loginResponse: LoginResponse;
   private userId: string;
   private apiKey: string;
+
+  private dialogOpened: boolean = false;
 
   public getLoginObserver(): Observable<LoginResponse> {
     return this.loginObservervable;
@@ -80,19 +82,23 @@ export class UserService {
   }
 
   private openDialog() {
-    let dialogRef = this.dialog.open(UserMainComponent, {
-      disableClose: true,
-      width: '400px',
-      data: {
-        userService: this,
-        callback: (loginResponse: LoginResponse) => {
-          this.userId = loginResponse.userId;
-          this.apiKey = loginResponse.apiKey;
-          this.cookieService.put('login-response', JSON.stringify(loginResponse));
-          this.notifyObservers(loginResponse);
+    if (!this.dialogOpened) {
+      this.dialogOpened = true;
+      let dialogRef = this.dialog.open(UserMainComponent, {
+        disableClose: true,
+        width: '400px',
+        data: {
+          userService: this,
+          callback: (loginResponse: LoginResponse) => {
+            this.dialogOpened = false;
+            this.userId = loginResponse.userId;
+            this.apiKey = loginResponse.apiKey;
+            this.cookieService.put('login-response', JSON.stringify(loginResponse));
+            this.notifyObservers(loginResponse);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   public checkLogin() {
