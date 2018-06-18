@@ -26,6 +26,11 @@ export class UserAnswerService {
     });
   }
 
+  public getUserAnswers(userId: String): Promise<UserChallengeAnswer[]> {
+
+    return this.userChallengeAnswerApi.getUserChallengeAnswers(userId.toString()).toPromise();
+  }
+
   public deleteUserAnswer(userAnswerId : String): Promise<boolean> {
     return new Promise<boolean>(resolve => {
       this.userChallengeAnswerApi.deleteUserChallengeAnswer(userAnswerId.toString()).subscribe(isDeleted => {
