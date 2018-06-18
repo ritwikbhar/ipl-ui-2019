@@ -61,18 +61,24 @@ export class QuestionsService {
      * Create a new question for a challenge if it is a STAT_QUIZ
      * @param id Unique id for challenge
      * @param body the question to be created
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createNewQuestion(id: string, body: Question, observe?: 'body', reportProgress?: boolean): Observable<Question>;
-    public createNewQuestion(id: string, body: Question, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
-    public createNewQuestion(id: string, body: Question, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
-    public createNewQuestion(id: string, body: Question, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createNewQuestion(id: string, body: Question, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public createNewQuestion(id: string, body: Question, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public createNewQuestion(id: string, body: Question, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public createNewQuestion(id: string, body: Question, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling createNewQuestion.');
         }
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createNewQuestion.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -98,6 +104,7 @@ export class QuestionsService {
         return this.httpClient.post<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -111,18 +118,24 @@ export class QuestionsService {
      * Deletes a question
      * @param id Unique id for challenge
      * @param qId Unique id for question
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteQuestion(id: string, qId: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public deleteQuestion(id: string, qId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public deleteQuestion(id: string, qId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public deleteQuestion(id: string, qId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteQuestion(id: string, qId: string, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public deleteQuestion(id: string, qId: string, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public deleteQuestion(id: string, qId: string, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public deleteQuestion(id: string, qId: string, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteQuestion.');
         }
         if (qId === null || qId === undefined) {
             throw new Error('Required parameter qId was null or undefined when calling deleteQuestion.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -143,6 +156,7 @@ export class QuestionsService {
 
         return this.httpClient.delete<boolean>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -241,13 +255,14 @@ export class QuestionsService {
      * @param id Unique id for challenge
      * @param qId Unique id for question
      * @param body the question to be created
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateQuestion(id: string, qId: string, body: Question, observe?: 'body', reportProgress?: boolean): Observable<Question>;
-    public updateQuestion(id: string, qId: string, body: Question, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
-    public updateQuestion(id: string, qId: string, body: Question, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
-    public updateQuestion(id: string, qId: string, body: Question, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateQuestion(id: string, qId: string, body: Question, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Question>;
+    public updateQuestion(id: string, qId: string, body: Question, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Question>>;
+    public updateQuestion(id: string, qId: string, body: Question, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Question>>;
+    public updateQuestion(id: string, qId: string, body: Question, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateQuestion.');
         }
@@ -256,6 +271,11 @@ export class QuestionsService {
         }
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateQuestion.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -281,6 +301,7 @@ export class QuestionsService {
         return this.httpClient.put<Question>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}/questions/${encodeURIComponent(String(qId))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

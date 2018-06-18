@@ -16,7 +16,7 @@ export class LeagueCardsComponent implements OnInit {
 
   ngOnInit() {
     this.cardsDetails = [];
-    this.leaguesService.getLeagues().then(leagues => {
+    this.leaguesService.getLeaguesAfterToday().then(leagues => {
       leagues.forEach(league => {
         this.cardsDetails.push(this.converterService.convertFromLeagueToCardDetails(league));
       });

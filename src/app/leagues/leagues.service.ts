@@ -29,7 +29,7 @@ export class LeaguesService {
                 date: new Date(challenge.date).getFullYear().toString(),
                 match: match,
                 name: (challenge.ctype == "WIN_PREDICTOR") ? "Who is going to win?" : (challenge.ctype == "STAT_QUIZ") ? "Guess Some Stats..." : "",
-                locked: false
+                locked: new Date(match.date.toString()) < new Date()
               };
               leagues.push(internalizedLeague);
 
@@ -48,6 +48,15 @@ export class LeaguesService {
 
   }
 
+  public getLeaguesAfterToday(): Promise<League[]> {
+    return new Promise<League[]>(resolve => {
+      this.getLeagues().then(leagues => {
+        let filteredLeagues = leagues.filter(league => new Date(league.match.date.toString()).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0));
+        resolve(filteredLeagues);
+      })
+    });
+  }
+
   public getLeagueById(id: string): Promise<League> {
     //TODO change the locked state to a proper locked
     return new Promise<League>(resolve => {
@@ -60,7 +69,7 @@ export class LeaguesService {
             date: challenge.date,
             match: match,
             name: challenge.name,
-            locked: false
+            locked: new Date(match.date.toString()) < new Date()
           };
           resolve(internalizedLeague);
         });

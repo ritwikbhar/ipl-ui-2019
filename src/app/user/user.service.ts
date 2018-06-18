@@ -45,7 +45,10 @@ export class UserService {
     });
   }
 
-  public getUser(userId: string): Promise<User> {
+  public getUser(userId?: string): Promise<User> {
+    if(!userId){
+      userId = this.userId;
+    }
     userId = userId.replace(".", "#");
     return this.userApi.getUser(userId).toPromise();
   }

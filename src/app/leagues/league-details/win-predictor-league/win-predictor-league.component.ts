@@ -155,7 +155,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       answerS: this.selectedGoalDiff.toString()
     };
 
-    this.userAnswerService.createUserAnswer(userAnswer).then(newUserAnswer => {
+    this.userAnswerService.createUserAnswer(userAnswer, this.apiKey).then(newUserAnswer => {
       this.userAnswerRaw = newUserAnswer;
     });
 
@@ -163,7 +163,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
   }
 
   private continueWithdrawl(): void {
-    this.userAnswerService.deleteUserAnswer(this.userAnswerRaw.id);
+    this.userAnswerService.deleteUserAnswer(this.userAnswerRaw.id, this.apiKey);
     this.userAnswerRaw = undefined;
     this.updateSliderText((this.maxVal + this.minVal) / 2);
     this.alreadyBetted = false;

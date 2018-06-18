@@ -27,7 +27,7 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
   private answersVisible: boolean = true;
 
   private userId: String;
-  private apiKey: String;
+  private apiKey: string;
 
   private userAnswer: UserChallengeAnswer;
 
@@ -157,14 +157,14 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
   private continueWithBet(): void {
     this.userAnswer.coinsBet = this.coinsToBet.toString();
-    this.userAnswerService.createUserAnswer(this.userAnswer).then(newUserAnswer => {
+    this.userAnswerService.createUserAnswer(this.userAnswer, this.apiKey).then(newUserAnswer => {
       this.userAnswer = newUserAnswer;
       this.alreadyBetted = true;
     });
   }
 
   private continueWithdrawl(): void {
-    this.userAnswerService.deleteUserAnswer(this.userAnswer.id).then(isDeleted => {
+    this.userAnswerService.deleteUserAnswer(this.userAnswer.id, this.apiKey).then(isDeleted => {
       if (isDeleted) {
         this.alreadyBetted = false;
       }

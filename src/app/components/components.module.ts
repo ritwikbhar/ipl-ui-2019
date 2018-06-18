@@ -7,11 +7,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { UserModule } from '../user/user.module';
+import { UserService } from '../user/user.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule
   ],
   declarations: [
     FooterComponent,
@@ -20,7 +22,8 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     PaginationComponent
   ],
   providers: [
-    CookieService
+    CookieService,
+    UserService
   ],
   exports: [
     FooterComponent,

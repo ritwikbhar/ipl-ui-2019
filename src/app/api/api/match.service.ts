@@ -60,13 +60,19 @@ export class MatchService {
      * Creates a new match.
      * 
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createMatch(body?: Match, observe?: 'body', reportProgress?: boolean): Observable<Match>;
-    public createMatch(body?: Match, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Match>>;
-    public createMatch(body?: Match, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Match>>;
-    public createMatch(body?: Match, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createMatch(body?: Match, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Match>;
+    public createMatch(body?: Match, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Match>>;
+    public createMatch(body?: Match, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Match>>;
+    public createMatch(body?: Match, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -91,6 +97,7 @@ export class MatchService {
         return this.httpClient.post<Match>(`${this.basePath}/matches`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -103,15 +110,21 @@ export class MatchService {
      * Deletes a match based on the project id.
      * Deletes a match based on the match id from file system.
      * @param id A match’s unique id to delete a match
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteMatch(id: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public deleteMatch(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public deleteMatch(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public deleteMatch(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteMatch(id: string, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public deleteMatch(id: string, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public deleteMatch(id: string, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public deleteMatch(id: string, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteMatch.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -132,6 +145,7 @@ export class MatchService {
 
         return this.httpClient.delete<boolean>(`${this.basePath}/matches/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -221,15 +235,21 @@ export class MatchService {
      * Updates the details of a match. 
      * @param id A match’s unique id to update a match
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateMatch(id: string, body?: Match, observe?: 'body', reportProgress?: boolean): Observable<Match>;
-    public updateMatch(id: string, body?: Match, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Match>>;
-    public updateMatch(id: string, body?: Match, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Match>>;
-    public updateMatch(id: string, body?: Match, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateMatch(id: string, body?: Match, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Match>;
+    public updateMatch(id: string, body?: Match, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Match>>;
+    public updateMatch(id: string, body?: Match, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Match>>;
+    public updateMatch(id: string, body?: Match, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateMatch.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -255,6 +275,7 @@ export class MatchService {
         return this.httpClient.put<Match>(`${this.basePath}/matches/${encodeURIComponent(String(id))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

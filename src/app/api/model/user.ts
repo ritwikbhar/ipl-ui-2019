@@ -18,4 +18,5 @@ export interface User {
     password?: string;
     coins?: string;
     userChallanges?: Array<string>;
+    logs?: Array<string>;
 }

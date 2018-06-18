@@ -61,13 +61,19 @@ export class ChallengeService {
      * Creates a new challenge.
      * 
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createChallenge(body?: Challenge, observe?: 'body', reportProgress?: boolean): Observable<Challenge>;
-    public createChallenge(body?: Challenge, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Challenge>>;
-    public createChallenge(body?: Challenge, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Challenge>>;
-    public createChallenge(body?: Challenge, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createChallenge(body?: Challenge, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Challenge>;
+    public createChallenge(body?: Challenge, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Challenge>>;
+    public createChallenge(body?: Challenge, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Challenge>>;
+    public createChallenge(body?: Challenge, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -92,6 +98,7 @@ export class ChallengeService {
         return this.httpClient.post<Challenge>(`${this.basePath}/challenges`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -104,15 +111,21 @@ export class ChallengeService {
      * Deletes a challenge based on the project id.
      * Deletes a challenge based on the challenge id from file system.
      * @param id A challenge’s unique id to delete a challenge
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteChallenge(id: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public deleteChallenge(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public deleteChallenge(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public deleteChallenge(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteChallenge(id: string, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public deleteChallenge(id: string, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public deleteChallenge(id: string, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public deleteChallenge(id: string, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteChallenge.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -133,6 +146,7 @@ export class ChallengeService {
 
         return this.httpClient.delete<boolean>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -146,15 +160,21 @@ export class ChallengeService {
      * Evaluate the result for the challenge
      * @param id A challenge’s unique id to update a challenge
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public evalueResult(id: string, body?: UserChallengeAnswer, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public evalueResult(id: string, body?: UserChallengeAnswer, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public evalueResult(id: string, body?: UserChallengeAnswer, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public evalueResult(id: string, body?: UserChallengeAnswer, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public evalueResult(id: string, body?: UserChallengeAnswer, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public evalueResult(id: string, body?: UserChallengeAnswer, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public evalueResult(id: string, body?: UserChallengeAnswer, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public evalueResult(id: string, body?: UserChallengeAnswer, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling evalueResult.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -180,6 +200,7 @@ export class ChallengeService {
         return this.httpClient.patch<boolean>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -269,15 +290,21 @@ export class ChallengeService {
      * Updates the details of a challenge. 
      * @param id A challenge’s unique id to update a challenge
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateChallenge(id: string, body?: Challenge, observe?: 'body', reportProgress?: boolean): Observable<Challenge>;
-    public updateChallenge(id: string, body?: Challenge, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Challenge>>;
-    public updateChallenge(id: string, body?: Challenge, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Challenge>>;
-    public updateChallenge(id: string, body?: Challenge, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateChallenge(id: string, body?: Challenge, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<Challenge>;
+    public updateChallenge(id: string, body?: Challenge, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Challenge>>;
+    public updateChallenge(id: string, body?: Challenge, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Challenge>>;
+    public updateChallenge(id: string, body?: Challenge, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateChallenge.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -303,6 +330,7 @@ export class ChallengeService {
         return this.httpClient.put<Challenge>(`${this.basePath}/challenges/${encodeURIComponent(String(id))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

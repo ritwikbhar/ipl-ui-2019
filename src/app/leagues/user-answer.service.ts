@@ -31,17 +31,17 @@ export class UserAnswerService {
     return this.userChallengeAnswerApi.getUserChallengeAnswers(userId.toString()).toPromise();
   }
 
-  public deleteUserAnswer(userAnswerId : String): Promise<boolean> {
+  public deleteUserAnswer(userAnswerId : String, apiKey : string): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      this.userChallengeAnswerApi.deleteUserChallengeAnswer(userAnswerId.toString()).subscribe(isDeleted => {
+      this.userChallengeAnswerApi.deleteUserChallengeAnswer(userAnswerId.toString(), apiKey).subscribe(isDeleted => {
         resolve(isDeleted);
       });
     }); 
   }
 
-  public createUserAnswer(userAnswer : UserChallengeAnswer) : Promise<UserChallengeAnswer> {
+  public createUserAnswer(userAnswer : UserChallengeAnswer, apiKey : string) : Promise<UserChallengeAnswer> {
     return new Promise<UserChallengeAnswer>(resolve => {
-      this.userChallengeAnswerApi.createUserChallengeAnswer(userAnswer).subscribe(newUserAnswer => {
+      this.userChallengeAnswerApi.createUserChallengeAnswer(userAnswer, apiKey).subscribe(newUserAnswer => {
         resolve(newUserAnswer);
       });
     });

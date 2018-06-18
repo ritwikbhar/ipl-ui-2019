@@ -60,13 +60,19 @@ export class UserChallengeAnswerService {
      * Creates a new userChallengeAnswer.
      * 
      * @param body 
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'body', reportProgress?: boolean): Observable<UserChallengeAnswer>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserChallengeAnswer>>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserChallengeAnswer>>;
-    public createUserChallengeAnswer(body?: UserChallengeAnswer, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createUserChallengeAnswer(body?: UserChallengeAnswer, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<UserChallengeAnswer>;
+    public createUserChallengeAnswer(body?: UserChallengeAnswer, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserChallengeAnswer>>;
+    public createUserChallengeAnswer(body?: UserChallengeAnswer, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserChallengeAnswer>>;
+    public createUserChallengeAnswer(body?: UserChallengeAnswer, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -91,6 +97,7 @@ export class UserChallengeAnswerService {
         return this.httpClient.post<UserChallengeAnswer>(`${this.basePath}/userChallengeAnswers`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -103,15 +110,21 @@ export class UserChallengeAnswerService {
      * Deletes a userChallengeAnswer based on the project id.
      * Deletes a userChallengeAnswer based on the userChallengeAnswer id from file system.
      * @param id A userChallengeAnswer’s unique id to delete a userChallengeAnswer
+     * @param authtoken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUserChallengeAnswer(id: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public deleteUserChallengeAnswer(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public deleteUserChallengeAnswer(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public deleteUserChallengeAnswer(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteUserChallengeAnswer(id: string, authtoken?: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public deleteUserChallengeAnswer(id: string, authtoken?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public deleteUserChallengeAnswer(id: string, authtoken?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public deleteUserChallengeAnswer(id: string, authtoken?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteUserChallengeAnswer.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authtoken !== undefined) {
+            queryParameters = queryParameters.set('authtoken', <any>authtoken);
         }
 
         let headers = this.defaultHeaders;
@@ -131,6 +144,7 @@ export class UserChallengeAnswerService {
 
         return this.httpClient.delete<boolean>(`${this.basePath}/userChallengeAnswers/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
