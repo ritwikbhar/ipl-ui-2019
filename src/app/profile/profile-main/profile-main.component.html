@@ -19,6 +19,37 @@
                 <app-history-card></app-history-card>
               </div>
             </mat-tab>
+            <mat-tab label="Change password">
+              <div class="demo-tab-content">
+                <div class="row justify-content-center">
+                  <form [formGroup]="changePasswordForm">
+                    <div class="md-form">
+                      <i class="fa fa-lock prefix grey-text"></i>
+                      <input type="password" formControlName="password" id="orangeForm-pass" class="form-control" [(ngModel)]="signUpPassword"
+                        mdbInputDirective>
+                      <label for="orangeForm-pass">Current password</label>
+                    </div>
+
+                    <div class="md-form">
+                      <i class="fa fa-lock prefix grey-text"></i>
+                      <input type="newPassword" formControlName="password" id="orangeForm-pass" class="form-control" [(ngModel)]="signUpPassword"
+                        mdbInputDirective>
+                      <label for="orangeForm-pass">New password</label>
+                    </div>
+
+                    <div class="md-form">
+                      <i class="fa fa-lock prefix grey-text"></i>
+                      <input type="confirmNewPassword" formControlName="orangeFormPass" id="orangeForm-pass" class="form-control" mdbInputDirective>
+                      <label for="orangeForm-pass">Confirm new password</label>
+                    </div>
+                    <p class="red-text" *ngIf="signUpLabelVisible">{{ signUpLabelText }}</p>
+                    <div class="text-center">
+                      <input type="submit" class="btn btn-warning btn-rounded waves-light" mdbWavesEffect value="Change Password">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </mat-tab>
           </mat-tab-group>
         </div>
       </div>

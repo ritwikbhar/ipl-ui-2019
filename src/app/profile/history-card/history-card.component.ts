@@ -14,39 +14,38 @@ export class HistoryCardComponent implements OnInit {
 
   private username: string;
   private apiKey: string;
+  history: History[] = [];
 
-  constructor(private userService: UserService, private userAnswerService: UserAnswerService, private leaguesService: LeaguesService) { }
+constructor(private userService: UserService, private userAnswerService: UserAnswerService, private leaguesService: LeaguesService) { }
 
-  ngOnInit() {
-    this.userService.getLoginObserver().subscribe(loginResponse => {
-      this.username = loginResponse.userId;
-      this.apiKey = loginResponse.apiKey;
-    });
-    this.userService.checkLogin();
+ngOnInit() {
+  this.userService.getLoginObserver().subscribe(loginResponse => {
+    this.username = loginResponse.userId;
+    this.apiKey = loginResponse.apiKey;
+  });
+  this.userService.checkLogin();
 
-    this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
-      console.log(userChallengeAnswers);
+  this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
 
-      userChallengeAnswers.forEach(userChallengeAnswer => {
-        console.log(userChallengeAnswer);
-        let history: History[] = [];
+    userChallengeAnswers.forEach(userChallengeAnswer => {
 
-        this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
-          if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
-            let internalizedHistory: History = {
-              team1: league.match.team1.name.toString(),
-              team2: league.match.team2.name.toString(),
-              cType: league.cType,
-              bet: userChallengeAnswer.coinsBet,
-              won: userChallengeAnswer.coinsWon,
-            };
-            history.push(internalizedHistory);
-          }
+      this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
+        if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
+          let internalizedHistory: History = {
+            team1: league.match.team1.name.toString(),
+            team2: league.match.team2.name.toString(),
+            cType: league.cType,
+            bet: userChallengeAnswer.coinsBet,
+            won: userChallengeAnswer.coinsWon,
+            link: "/leagues/" + league.id
+          };
+          this.history.push(internalizedHistory);
+        }
 
-        });
       });
-
-
     });
-  }
+
+
+  });
+}
 }

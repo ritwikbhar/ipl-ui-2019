@@ -20,7 +20,7 @@ export class UserMainComponent implements OnInit {
   email: string;
   signUpPassword: string;
   password: string;
-
+  confirmPassword: string;
   signUpLabelVisible: boolean;
   signUpLabelText: string;
 
@@ -66,13 +66,13 @@ export class UserMainComponent implements OnInit {
   }
 
   onSignupSubmit() {
-    this.data.userService.createNewUser(this.signUpName, this.email, this.signUpPassword).then(user => {
-      this.signUpLabelText = "Your account has been created. Proceed to login";
-      this.signUpLabelVisible = true;
-    }).catch(reason => {
-      this.signUpLabelText = "Account with email already exists";
-      this.signUpLabelVisible = true;
-    });
+      this.data.userService.createNewUser(this.signUpName, this.email, this.signUpPassword).then(user => {
+        this.signUpLabelText = "Your account has been created. Proceed to login";
+        this.signUpLabelVisible = true;
+      }).catch(reason => {
+        this.signUpLabelText = "Account with email already exists";
+        this.signUpLabelVisible = true;
+      });
   }
 
 }
