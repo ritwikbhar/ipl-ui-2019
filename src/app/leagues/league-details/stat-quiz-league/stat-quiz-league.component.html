@@ -30,10 +30,10 @@
               </li>
             </ol>
           </div>
-          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked">
+          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked && !answersVisible">
             <app-bet-btn (betted)="onBetClicked($event)" [coinsBet]="coinsToBet"></app-bet-btn>
           </div>
-          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked">
+          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked && !answersVisible">
             <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
               Withdraw From Bet
             </button>

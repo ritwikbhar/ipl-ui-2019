@@ -7,15 +7,21 @@
                 <th>League</th>
                 <th>Your Bet</th>
                 <th>You Scored</th>
+                <th>Link</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let i of history">
-                <td>{{ i.team1 }}</td>
-                <td>{{ i.team2 }}</td>
-                <td>{{ i.cType }}</td>
-                <td>{{ i.bet }}</td>
-                <td>{{ i.won }}</td>
+            <tr *ngFor="let item of history">
+                <td>{{ item.team1 }}</td>
+                <td>{{ item.team2 }}</td>
+                <td>{{ item.cType }}</td>
+                <td>{{ item.bet }}</td>
+                <td>{{ item.won }}</td>
+                <td>
+                    <a class="nav-link" href="{{item.link}}">
+                        <i class="fa fa-link" aria-hidden="true"></i>
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>

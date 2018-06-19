@@ -14,6 +14,7 @@ export class HistoryCardComponent implements OnInit {
 
   private username: string;
   private apiKey: string;
+  history: History[] = [];
 
   constructor(private userService: UserService, private userAnswerService: UserAnswerService, private leaguesService: LeaguesService) { }
 
@@ -23,11 +24,8 @@ export class HistoryCardComponent implements OnInit {
       this.apiKey = loginResponse.apiKey;
 
       this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
-        console.log(userChallengeAnswers);
 
         userChallengeAnswers.forEach(userChallengeAnswer => {
-          console.log(userChallengeAnswer);
-          let history: History[] = [];
 
           this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
             if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
@@ -37,8 +35,9 @@ export class HistoryCardComponent implements OnInit {
                 cType: league.cType,
                 bet: userChallengeAnswer.coinsBet,
                 won: userChallengeAnswer.coinsWon,
+                link: "/leagues/" + league.id
               };
-              history.push(internalizedHistory);
+              this.history.push(internalizedHistory);
             }
 
           });
@@ -48,5 +47,7 @@ export class HistoryCardComponent implements OnInit {
       });
     });
     this.userService.checkLogin();
+
+
   }
 }

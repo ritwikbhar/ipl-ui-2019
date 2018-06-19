@@ -52,6 +52,9 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
           if (question.answer === null) {
             this.answersVisible = false;
           }
+          else{
+            this.league.locked = true;
+          }
         });
 
         this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {

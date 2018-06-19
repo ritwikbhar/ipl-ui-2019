@@ -55,6 +55,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       });
 
       if (match.finished) {
+        this.league.locked = true;
         let scoreDiff = match.team1Score - match.team2Score;
         if (scoreDiff === 0) {
           this.matchResultText = "The match was Draw";

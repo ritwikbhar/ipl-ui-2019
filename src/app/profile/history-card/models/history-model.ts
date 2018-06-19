@@ -5,5 +5,6 @@ export interface History {
     cType: string
     bet: string,
     won: string,
+    link: string
 
 }

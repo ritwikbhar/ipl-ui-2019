@@ -12,15 +12,15 @@
           <h4 *ngIf="alreadyBetted" class="red-text">You have betted {{ userAnswerRaw.coinsBet }} coins for this league</h4>
           <div class="row justify-content-center">
             <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ userAnswer }}" class="col-6" (input)="onSliderChange($event)"
-              disabled="{{ league.locked }}"></mat-slider>
+              disabled="{{ league.locked || league.match.finished }}"></mat-slider>
           </div>
           <p class="text-center">
             You think {{ selectedResult }}
           </p>
-          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked">
+          <div class="row justify-content-center" *ngIf="!alreadyBetted && !league.locked && !league.match.finished">
             <app-bet-btn (betted)="onBetClicked($event)" [coinsBet]="coinsToBet"></app-bet-btn>
           </div>
-          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked">
+          <div class="row justify-content-center" *ngIf="alreadyBetted && !league.locked && !league.match.finished">
             <button type="button" class="btn btn-success waves-light" mdbWavesEffect (click)="onWithdrawClicked()">
               Withdraw From Bet
             </button>
