@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../user/user.service';
 
 @Component({
@@ -12,10 +13,22 @@ export class ProfileMainComponent implements OnInit {
   displayName : string;
   coins : number;
   email: string;
+
+  changePasswordForm: FormGroup;
+  currentPassword : string;
+  newPassword: string;
+  confirmNewPassword: string;
   
-  constructor(private userService : UserService) { }
+  constructor(private fb: FormBuilder, private userService : UserService) { }
 
   ngOnInit() {
+
+    this.changePasswordForm = this.fb.group({
+      currentPassword : this.currentPassword,
+      newPassword: this.newPassword,
+      confirmNewPassword: this.confirmNewPassword
+    });
+    
     this.userService.getLoginObserver().subscribe(loginResponse=>{
 
       this.userService.getUser(loginResponse.userId).then(user => {

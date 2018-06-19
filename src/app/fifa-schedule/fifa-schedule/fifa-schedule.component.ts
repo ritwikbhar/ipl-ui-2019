@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatchService } from '../../match/match.service';
+import { MatchGroup } from '../../match/models/MatchGroup';
 
 @Component({
   selector: 'app-fifa-schedule',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FifaScheduleComponent implements OnInit {
 
-  constructor() { }
+  title ="Fifa Schedule";
+  matchGroups:MatchGroup[] = [];
+
+  constructor(private matchService : MatchService) { }
 
   ngOnInit() {
+    this.matchService.getGroupedMatches().then(matchGroups=>{
+      this.matchGroups = matchGroups;
+    });
   }
 
 }

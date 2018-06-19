@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Team } from './models/Team';
 import { Match } from './models/Match';
 import { MatchService as MatchApi, TeamsService as TeamsApi } from '../api/api/api';
-import { resolve } from 'q';
+import { MatchGroup } from './models/MatchGroup';
+import { _ } from 'underscore';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class MatchService {
         else {
           resolve(null);
         }*/
-        this.getTeamPairById(team1Id, team2Id, (team1, team2)=>{
+        this.getTeamPairById(team1Id, team2Id, (team1, team2) => {
           resolve(this.getInternaliedMatch(match, team1, team2));
         })
       });
@@ -40,21 +41,21 @@ export class MatchService {
 
         let internalizedMatches: Match[] = [];
         matches = matches
-        .filter(match => new Date(match.date.toString()).setHours(0,0,0,0) == new Date().setHours(0,0,0,0));
-        
+          .filter(match => new Date(match.date.toString()).setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0));
+
         matches
-        .forEach(match => {
-          this.getTeamPairById(match.team1, match.team2, (team1, team2) => {
-            internalizedMatches.push(this.getInternaliedMatch(match, team1, team2));
-            if (internalizedMatches.length >= matches.length) {
-              resolve(
-                internalizedMatches
-                  .sort((a, b) => Date.parse(a.date.toString()) - Date.parse(b.date.toString()))
-                //.filter(match => new Date(match.date.toString()).setHours(0,0,0,0) == new Date().setHours(0,0,0,0))
-              );
-            }
-          });
-        })
+          .forEach(match => {
+            this.getTeamPairById(match.team1, match.team2, (team1, team2) => {
+              internalizedMatches.push(this.getInternaliedMatch(match, team1, team2));
+              if (internalizedMatches.length >= matches.length) {
+                resolve(
+                  internalizedMatches
+                    .sort((a, b) => Date.parse(a.date.toString()) - Date.parse(b.date.toString()))
+                  //.filter(match => new Date(match.date.toString()).setHours(0,0,0,0) == new Date().setHours(0,0,0,0))
+                );
+              }
+            });
+          })
       });
     });
   }
@@ -62,7 +63,7 @@ export class MatchService {
   public getTeamPairById(team1Id, team2Id, callback: (team1: Team, team2: Team) => void): void {
     let resolvedTeam1: Team, resolvedTeam2: Team;
 
-    if (team1Id && team1Id !== null || team2Id  && team2Id !== null) {
+    if (team1Id && team1Id !== null || team2Id && team2Id !== null) {
 
       if (team1Id && team1Id != null) {
         this.getTeamById(team1Id).then(team1 => {
@@ -81,7 +82,7 @@ export class MatchService {
           }
         });
       }
-      
+
     }
     else {
       callback(null, null);
@@ -107,10 +108,50 @@ export class MatchService {
     });
   }
 
+  public getMatches(): Promise<Match[]> {
+    return new Promise<Match[]>(resolve => {
+      this.matchApi.getMatches().subscribe(matches => {
+
+        let internalizedMatches: Match[] = [];
+
+        matches
+          .forEach(match => {
+            this.getTeamPairById(match.team1, match.team2, (team1, team2) => {
+              internalizedMatches.push(this.getInternaliedMatch(match, team1, team2));
+              if (internalizedMatches.length >= matches.length) {
+                resolve(
+                  internalizedMatches
+                    .sort((a, b) => Date.parse(a.date.toString()) - Date.parse(b.date.toString()))
+                  //.filter(match => new Date(match.date.toString()).setHours(0,0,0,0) == new Date().setHours(0,0,0,0))
+                );
+              }
+            });
+          })
+      });
+    });
+  }
+
+  public getGroupedMatches(): Promise<MatchGroup[]> {
+    return new Promise<MatchGroup[]>(resolve => {
+      
+      this.getMatches().then(matches => {
+        let matchGroups : MatchGroup[] = [];
+        let x = _.groupBy(matches, match => new Date(match.date).setHours(0,0,0,0));
+        for(let element in x){
+          matchGroups.push({
+            date: new Date(x[element][0].date).toDateString(),
+            matches: x[element]
+          });
+        }
+        resolve(matchGroups);
+      });
+    });
+  }
+
   private getInternaliedMatch(match, team1: Team, team2: Team): Match {
     let internalizedMatch: Match = {
       id: match.id,
-      date: new Date(match.date).toLocaleString(),
+      date: new Date(match.date).toString(),
       name: match.name,
       stadium: null,
       team1: team1,

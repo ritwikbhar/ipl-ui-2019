@@ -25,21 +25,21 @@
                   <form [formGroup]="changePasswordForm">
                     <div class="md-form">
                       <i class="fa fa-lock prefix grey-text"></i>
-                      <input type="password" formControlName="password" id="orangeForm-pass" class="form-control" [(ngModel)]="signUpPassword"
+                      <input type="password" formControlName="currentPassword" id="orangeForm-pass" class="form-control" [(ngModel)]="currentPassword"
                         mdbInputDirective>
                       <label for="orangeForm-pass">Current password</label>
                     </div>
 
                     <div class="md-form">
                       <i class="fa fa-lock prefix grey-text"></i>
-                      <input type="newPassword" formControlName="password" id="orangeForm-pass" class="form-control" [(ngModel)]="signUpPassword"
+                      <input type="newPassword" formControlName="newPassword" id="orangeForm-pass" class="form-control" [(ngModel)]="newPassword"
                         mdbInputDirective>
                       <label for="orangeForm-pass">New password</label>
                     </div>
 
                     <div class="md-form">
                       <i class="fa fa-lock prefix grey-text"></i>
-                      <input type="confirmNewPassword" formControlName="orangeFormPass" id="orangeForm-pass" class="form-control" mdbInputDirective>
+                      <input type="confirmNewPassword" formControlName="confirmNewPassword" id="orangeForm-pass" class="form-control" mdbInputDirective>
                       <label for="orangeForm-pass">Confirm new password</label>
                     </div>
                     <p class="red-text" *ngIf="signUpLabelVisible">{{ signUpLabelText }}</p>

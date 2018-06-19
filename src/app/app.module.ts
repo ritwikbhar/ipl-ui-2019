@@ -18,6 +18,7 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { FifaScheduleModule } from './fifa-schedule/fifa-schedule.module';
+import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedule.component';
 
 @NgModule({
   imports: [

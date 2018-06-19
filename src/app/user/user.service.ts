@@ -13,6 +13,9 @@ export class UserService {
   constructor(public dialog: MatDialog, private userApi: UserApi, private cookieService: CookieService) {
     this.observers = [];
     this.loginObservervable = new Observable<LoginResponse>(observer => {
+      if(this.loginResponse){
+        observer.next(this.loginResponse);
+      }
       this.observers.push(observer);
     });
 
@@ -123,6 +126,7 @@ export class UserService {
           userId: savedLoginResponse.userId
         };
 
+        this.loginResponse = loginResponse;
         this.userId = loginResponse.userId;
         this.apiKey = loginResponse.apiKey;
 

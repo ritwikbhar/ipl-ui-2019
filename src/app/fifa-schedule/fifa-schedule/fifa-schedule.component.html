@@ -1,3 +1,30 @@
-<p>
-  fifa-schedule works!
-</p>
+<app-navbar [title]="title"></app-navbar>
+<br>
+<br>
+<br>
+<div class="container">
+  <div class="card" *ngFor="let matchGroup of matchGroups">
+    <!--Card content-->
+    <div class="card-body">
+      <h4 class="card-title">{{ matchGroup.date }}</h4>
+      <ul class="list-group">
+        <li *ngFor="let match of matchGroup.matches" class="list-group-item  waves-light">
+          <div class="row">
+            <div id="home-team" class="col">
+              <img class="img-thumbnail team-flag float-left" src="{{ match.team1.flag }}" *ngIf="match.team1">
+              <br>
+              <span *ngIf="match.team1" class="float-left">{{ match.team1.name }}</span>
+            </div>
+            <div class="col-1"><br></div>
+            <div id="away-team" class="col">
+              <img class="img-thumbnail team-flag float-right" src="{{ match.team2.flag }}" *ngIf="match.team2">
+              <br>
+              <span *ngIf="match.team2" class="float-right">{{ match.team2.name }}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

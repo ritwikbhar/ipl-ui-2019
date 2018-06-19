@@ -12,9 +12,14 @@ import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedu
 
 const routes: Routes = [
   { path: 'leaderboard', component: LeaderboardMainComponent },
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
   { path: 'dashboard', component: DashboardMainComponent },
-  { 
-    path: 'leagues', 
+  {
+    path: 'leagues',
     component: LeaguesMainComponent,
     children: [
       {
@@ -25,14 +30,11 @@ const routes: Routes = [
         path: ':id',
         component: LeagueDetailsComponent
       }
-    ] 
+    ]
   },
-  { path: 'profile', component: ProfileMainComponent }
+  { path: 'profile', component: ProfileMainComponent },
+  { path: 'fifa-schedule', component: FifaScheduleComponent }
 ];
-// { path: '', component: DashboardComponent }];
-// { path: '', component: PlayersDashboardComponent }];
-// { path: '', component: TeamsDashboardComponent }];
-// { path: '', component: ChallengesDashboardComponent }];
 
 
 @NgModule({

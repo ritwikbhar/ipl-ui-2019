@@ -24,7 +24,7 @@ export class HistoryCardComponent implements OnInit {
       this.apiKey = loginResponse.apiKey;
 
       this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
-
+        this.history = [];
         userChallengeAnswers.forEach(userChallengeAnswer => {
 
           this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
