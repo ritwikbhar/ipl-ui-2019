@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import {
   AgmCoreModule
 } from '@agm/core';
+import { FifaScheduleModule } from './fifa-schedule/fifa-schedule.module';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {
     LeaderboardModule,
     LeaguesModule,
     DashboardModule,
-    ProfileModule
+    ProfileModule,
+    FifaScheduleModule
   ],
   declarations: [
     AppComponent

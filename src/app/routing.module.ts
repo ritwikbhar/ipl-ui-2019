@@ -8,6 +8,7 @@ import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-mai
 import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
 import { LeagueCardsComponent } from './leagues/league-cards/league-cards.component';
 import { LeagueDetailsComponent } from './leagues/league-details/league-details.component';
+import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedule.component';
 
 const routes: Routes = [
   { path: 'leaderboard', component: LeaderboardMainComponent },

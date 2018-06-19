@@ -9,17 +9,10 @@ import { UserService } from '../../user/user.service';
 export class LeaguesMainComponent implements OnInit {
 
   title="Leagues";
-
-  private username : string;
-  private apiKey : string;
   
   constructor(private userService : UserService) { }
 
   ngOnInit() {
-    this.userService.getLoginObserver().subscribe(loginResponse => {
-      this.username = loginResponse.userId;
-      this.apiKey = loginResponse.apiKey;
-    });
   }
 
 }

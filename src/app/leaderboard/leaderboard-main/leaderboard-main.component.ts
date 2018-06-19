@@ -10,23 +10,27 @@ import { UserService as UserApi, User } from '../../api';
 export class LeaderboardMainComponent implements OnInit {
   title = "Leaderboard";
 
-  users: User[];
+  users: User[] = [];
 
-  constructor(private userApi: UserApi, private userService : UserService) { }
+  constructor(private userApi: UserApi, private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.checkLogin();
     this.userApi.getUsers().toPromise().then(users => {
       this.users = users.sort((a, b) => Number.parseInt(b.coins) - Number.parseInt(a.coins));
     });
+    this.userService.checkLogin();
   }
 
-  getWinnerPlayer(){
-    return this.users[0];
+  getWinnerPlayer() {
+    if (this.users.length >= 1) {
+      return this.users[0];
+    }
   }
 
   getRunnersUpPlayer() {
-    return this.users[1];
+    if (this.users.length >= 2) {
+      return this.users[1];
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 <app-navbar [title]="title"></app-navbar>
 <br><br><br>
 <div class="container">
-  <app-top-players [winnerPlayer]="getWinnerPlayer()" [runnersUpPlayer]="getRunnersUpPlayer()"></app-top-players>
+  <app-top-players [winnerPlayer]="getWinnerPlayer()" [runnersUpPlayer]="getRunnersUpPlayer()" *ngIf="users.length >= 2"></app-top-players>
   <app-table-view [players]="users"></app-table-view>
 </div>
 

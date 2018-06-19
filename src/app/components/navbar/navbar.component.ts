@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
     mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
-    private notifications : string[];
+    private notifications : string[] = [];
 
     constructor(location: Location, private element: ElementRef, private router: Router, private userService : UserService) {
         this.location = location;
@@ -37,13 +37,15 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
-        this.userService.getUser().then(user=>{
-            this.notifications = [];
-            let logs = user.logs.reverse();
-            for(let i = 0; i < Math.min(10, logs.length); i++){
-                this.notifications.push(logs[i]);
-            }
-        })
+        this.userService.getLoginObserver().subscribe(payload => {
+            this.userService.getUser().then(user=>{
+                this.notifications = [];
+                let logs = user.logs.reverse();
+                for(let i = 0; i < Math.min(10, logs.length); i++){
+                    this.notifications.push(logs[i]);
+                }
+            })
+        });
     }
 
     sidebarOpen() {

@@ -21,32 +21,32 @@ export class HistoryCardComponent implements OnInit {
     this.userService.getLoginObserver().subscribe(loginResponse => {
       this.username = loginResponse.userId;
       this.apiKey = loginResponse.apiKey;
+
+      this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
+        console.log(userChallengeAnswers);
+
+        userChallengeAnswers.forEach(userChallengeAnswer => {
+          console.log(userChallengeAnswer);
+          let history: History[] = [];
+
+          this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
+            if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
+              let internalizedHistory: History = {
+                team1: league.match.team1.name.toString(),
+                team2: league.match.team2.name.toString(),
+                cType: league.cType,
+                bet: userChallengeAnswer.coinsBet,
+                won: userChallengeAnswer.coinsWon,
+              };
+              history.push(internalizedHistory);
+            }
+
+          });
+        });
+
+
+      });
     });
     this.userService.checkLogin();
-
-    this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
-      console.log(userChallengeAnswers);
-
-      userChallengeAnswers.forEach(userChallengeAnswer => {
-        console.log(userChallengeAnswer);
-        let history: History[] = [];
-
-        this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
-          if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
-            let internalizedHistory: History = {
-              team1: league.match.team1.name.toString(),
-              team2: league.match.team2.name.toString(),
-              cType: league.cType,
-              bet: userChallengeAnswer.coinsBet,
-              won: userChallengeAnswer.coinsWon,
-            };
-            history.push(internalizedHistory);
-          }
-
-        });
-      });
-
-
-    });
   }
 }
