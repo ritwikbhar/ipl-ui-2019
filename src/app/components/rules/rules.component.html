@@ -1,122 +1,111 @@
-<app-navbar [title]="title"></app-navbar>
-<br><br><br>
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div class="card">
-          <mat-tab-group class="demo-tab-group col-12">
-            <mat-tab label="The Game">
-              <div class="demo-tab-content">
-                <br><br>
-                <div class="col-md-4">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">attach_money</i>
-                      </div>
-                      <p class="card-category">onSignup()</p>
-                      <h3 class="card-title">1000 <small>coins</small></h3>
-                    </div>
-                  </div>
-                </div>
-                <p class="h5 mb-4">1. On signup, every user is credited with 1000 coins in the wallet.</p>
-                <p class="h5 mb-4">2. There are two types of leagues you can take part in, for each match : </p>
-                <p class="h7 mb-4"> i) Win Predictor - where you predict the winners (along with goal margin)</p>
-                <p class="h7 mb-4"> ii) Stat Quiz - where you predict a few stats(Yes/No types) for a game</p>
-                <p class="h5 mb-4">3. For both the leagues, you will have to place a bet from your wallet limit</p>
-                <p class="h5 mb-4">4. The bet amount would be deduced from your wallet when you place the bet</p>
-                <p class="h5 mb-4">5. You can withdraw from any bet till 1 hour before the start of the game</p>
-                <p class="h5 mb-4">6. At every frequent interval, you will be credited with 100 coins to your wallet. There will be other ways
-                  to earn coins as well which will be communicated later. </p>
-                <p class="h5 mb-4">7. Winner and Runner-up to win Prizes</p>
-                <p class="h mb-4">Do not use your official email ids to create the account</p>
-                <p class="h4 mb-4">DISCLAIMER : THIS IS AN INTERNAL FUN EVENT ONLY AND NO REAL BETTING OR MONEY IS INVOLVED.</p>
-              </div>
-            </mat-tab>
-            <mat-tab label="Win Predictor">
-              <div class="demo-tab-content">
-                <table class="table table-sm table-hover table-responsive-md">
-                  <thead>
-                    <tr>
-                      <th>Sl. No</th>
-                      <th>Scenario</th>
-                      <th>Your bet</th>
-                      <th>You will score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Team you predicted wins with exact goal difference</td>
-                      <td>NCoins</td>
-                      <td>4 x NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>You predict a draw</td>
-                      <td>NCoins</td>
-                      <td>4 x NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Team you predicted wins with +1 or -1 goal difference</td>
-                      <td>NCoins</td>
-                      <td>2 x NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Team you predicted wins with more than +/- 1 goal difference</td>
-                      <td>NCoins</td>
-                      <td>NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Team you predicted loses</td>
-                      <td>NCoins</td>
-                      <td>- NCoins (this is deducted when you bet initially)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </mat-tab>
-            <mat-tab label="Stat Quiz">
-              <div class="demo-tab-content">
-                <table class="table table-sm table-hover table-responsive-md">
-                  <thead>
-                    <tr>
-                      <th>Sl. No</th>
-                      <th>Scenario</th>
-                      <th>Your bet</th>
-                      <th>You will score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>You predicted all 3 stats correctly</td>
-                      <td>NCoins</td>
-                      <td>3 x NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>You predicted 2 stats correctly</td>
-                      <td>NCoins</td>
-                      <td>2 x NCoins</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>You predicted 1 stat correctly or no stats correctly</td>
-                      <td>NCoins</td>
-                      <td>- NCoins (this is deducted when you bet initially)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </mat-tab>
-          </mat-tab-group>
+<div class="container">
+  <h3>Rules of the Game</h3>
+  <div class="row justify-content-center">
+    <!--<div class="col-md-8">-->
+    <div class="card">
+      <mat-tab-group class="demo-tab-group col-12">
+        <mat-tab label="The Game">
+          <div class="demo-tab-content">
+            <br>
+            <ul class="list">
+              <li>On first login, every user is credited with 1000 byteCoins (no pun unintended =P) in the wallet.</li>
+              <li>There are two types of leagues you can take part in, for each match </li>
+              <ul>
+                <li>Win Predictor - where you predict the winners (along with goal margin)</li>
+                <li>Stat Guru - where you predict a few stats(Yes/No types) for a game</li>
+              </ul>
+              <li>For both the leagues, you will have to place a bet from your wallet limit</li>
+              <li>The bet amount would be deduced from your wallet when you place the bet</li>
+              <li>You can withdraw from any bet till 1 hour before the start of the game</li>
+              <li>At every frequent interval, you will be credited with byteCoins to your wallet. There will be other ways to
+                earn the byteCoins as well which will be communicated later. </li>
+              <li>Winner and Runner-up to win Prizes</li>
+            </ul>
+            <p>DISCLAIMER : THIS IS AN INTERNAL FUN EVENT ONLY AND NO REAL BETTING OR MONEY IS INVOLVED.</p>
+          </div>
+        </mat-tab>
+        <mat-tab label="Win Predictor">
+          <div class="demo-tab-content">
+            <table class="table table-sm table-hover table-responsive-md">
+              <thead>
+                <tr>
+                  <th>Sl. No</th>
+                  <th>Scenario</th>
+                  <th>Your bet</th>
+                  <th>You will score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Team you predicted wins with exact goal difference</td>
+                  <td>NCoins</td>
+                  <td>4 x NCoins</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>You predict a draw</td>
+                  <td>NCoins</td>
+                  <td>4 x NCoins</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Team you predicted wins with +1 or -1 goal difference</td>
+                  <td>NCoins</td>
+                  <td>2 x NCoins</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Team you predicted wins with more than +/- 1 goal difference</td>
+                  <td>NCoins</td>
+                  <td>NCoins</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Team you predicted loses</td>
+                  <td>NCoins</td>
+                  <td>- NCoins (this is deducted when you bet initially)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Stat Guru">
+          <div class="demo-tab-content">
+            <table class="table table-sm table-hover table-responsive-md">
+              <thead>
+                <tr>
+                  <th>Sl. No</th>
+                  <th>Scenario</th>
+                  <th>Your bet</th>
+                  <th>You will score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>You predicted all 3 stats correctly</td>
+                  <td>NCoins</td>
+                  <td>3 x NCoins</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>You predicted 2 stats correctly</td>
+                  <td>NCoins</td>
+                  <td>2 x NCoins</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>You predicted 1 stat correctly or no stats correctly</td>
+                  <td>NCoins</td>
+                  <td>- NCoins (this is deducted when you bet initially)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
 
-        </div>
-      </div>
     </div>
+    <!--</div>-->
   </div>
