@@ -45,8 +45,9 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       let match = this.league.match;
 
       this.userAnswer = (this.maxVal + this.minVal) / 2;
-
+      
       this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
+        this.userAnswer = (this.maxVal + this.minVal) / 2;
         this.userAnswerRaw = userAnswer;
         this.userAnswer -= Number.parseInt(userAnswer.answerS.toString());
         this.alreadyBetted = true;

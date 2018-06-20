@@ -65,8 +65,8 @@ export class UserService {
     }).toPromise();
   }
 
-  public login(email, password): Promise<ValidatedUser> {
-    return this.userApi.login(email, password).toPromise();
+  public login(username, password): Promise<ValidatedUser> {
+    return this.userApi.login(username, password).toPromise();
   }
 
   public incrementWalletBalance(amount: number): Promise<number> {
