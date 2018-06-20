@@ -28,7 +28,7 @@ export class LeaguesService {
                 cType: challenge.ctype,
                 date: new Date(challenge.date).getFullYear().toString(),
                 match: match,
-                name: (challenge.ctype == "WIN_PREDICTOR") ? "Who is going to win?" : (challenge.ctype == "STAT_QUIZ") ? "Guess Some Stats..." : "",
+                name: (challenge.ctype == "WIN_PREDICTOR") ? "Win Predictor" : (challenge.ctype == "STAT_QUIZ") ? "Stat Guru" : "",
                 locked: new Date(match.date.toString()) < new Date()
               };
               leagues.push(internalizedLeague);

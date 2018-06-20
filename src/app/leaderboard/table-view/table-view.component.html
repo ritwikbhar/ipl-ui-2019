@@ -2,7 +2,6 @@
   <thead>
     <tr>
       <th>#</th>
-      <th></th>
       <th>Name</th>
       <th>Coin Collection</th>
     </tr>
@@ -10,7 +9,6 @@
   <tbody>
     <tr  *ngFor="let player of players; let i = index">
       <td scope="row">{{ i + 1 }}</td>
-      <td><img src="{{ player.image }}" alt="..." class="rounded-circle user-img"></td>
       <td>{{ player.displayName }}</td>
       <td>{{ player.coins }}</td>
     </tr>
