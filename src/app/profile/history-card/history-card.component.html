@@ -2,8 +2,8 @@
     <table class="table table-sm table-hover table-responsive-md">
         <thead>
             <tr>
-                <th>Team 1</th>
-                <th>Team 2</th>
+                <th>Date</th>
+                <th>Match</th>
                 <th>League</th>
                 <th>Your Bet</th>
                 <th>You Scored</th>
@@ -12,8 +12,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of history">
-                <td>{{ item.team1 }}</td>
-                <td>{{ item.team2 }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.team1 }} vs {{ item.team2 }}</td>
                 <td>{{ item.cType }}</td>
                 <td>{{ item.bet }}</td>
                 <td>{{ item.won }}</td>

@@ -9,7 +9,7 @@
         <div class="demo-tab-content">
           <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
           <br>
-          <h4 *ngIf="alreadyBetted" class="red-text">You have betted {{ userAnswer.coinsBet }} coins for this league</h4>
+          <h4 *ngIf="alreadyBetted" class="red-text">You have bet {{ userAnswer.coinsBet }} coins for this league</h4>
           <br>
           <div class="container">
             <h4>Guess the following stats...</h4>
@@ -61,11 +61,6 @@
               </li>
             </ol>
           </div>
-        </div>
-      </mat-tab>
-      <mat-tab label="Leaderboard" disabled="true">
-        <div class="demo-tab-content">
-          
         </div>
       </mat-tab>
     </mat-tab-group>

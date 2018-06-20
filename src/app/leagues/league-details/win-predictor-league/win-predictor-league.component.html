@@ -9,7 +9,7 @@
         <div class="demo-tab-content">
           <app-competing-teams [team1]="league.match.team1" [team2]="league.match.team2"></app-competing-teams>
           <br>
-          <h4 *ngIf="alreadyBetted" class="red-text">You have betted {{ userAnswerRaw.coinsBet }} coins for this league</h4>
+          <h4 *ngIf="alreadyBetted" class="red-text">You have bet {{ userAnswerRaw.coinsBet }} coins for this league</h4>
           <div class="row justify-content-center">
             <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ userAnswer }}" class="col-6" (input)="onSliderChange($event)"
               disabled="{{ league.locked || league.match.finished }}"></mat-slider>
@@ -35,11 +35,6 @@
             <h3>{{ matchResultText }}</h3>
           </div>
           <br><br>
-        </div>
-      </mat-tab>
-      <mat-tab label="Leaderboard" disabled="true">
-        <div class="demo-tab-content">
-
         </div>
       </mat-tab>
     </mat-tab-group>

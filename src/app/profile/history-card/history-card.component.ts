@@ -30,14 +30,18 @@ export class HistoryCardComponent implements OnInit {
           this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
             if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
               let internalizedHistory: History = {
+                date: new Date(league.match.date.toString()).toLocaleDateString(),
                 team1: league.match.team1.name.toString(),
                 team2: league.match.team2.name.toString(),
-                cType: league.cType,
+                cType: (league.cType == "WIN_PREDICTOR") ? "Win Predictor" : "Stat Guru",
                 bet: userChallengeAnswer.coinsBet,
                 won: userChallengeAnswer.coinsWon,
-                link: "/leagues/" + league.id
+                link: "/leagues/" + league.id,
+                challengeId: userChallengeAnswer.challengeId
               };
-              this.history.push(internalizedHistory);
+              if (!this.history.find(h => h.challengeId == userChallengeAnswer.challengeId)) {
+                this.history.push(internalizedHistory);
+              }
             }
 
           });
