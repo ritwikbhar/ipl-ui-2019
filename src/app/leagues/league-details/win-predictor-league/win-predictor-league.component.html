@@ -12,7 +12,7 @@
           <h4 *ngIf="alreadyBetted" class="red-text">You have bet {{ userAnswerRaw.coinsBet }} coins for this league</h4>
           <div class="row justify-content-center">
             <mat-slider min="{{ minVal }}" max=" {{ maxVal }}" step="1" value="{{ userAnswer }}" class="col-6" (input)="onSliderChange($event)"
-              disabled="{{ league.locked || league.match.finished }}"></mat-slider>
+              disabled="{{ league.locked || league.match.finished || alreadyBetted }}"></mat-slider>
           </div>
           <p class="text-center">
             You think {{ selectedResult }}

@@ -37,6 +37,8 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
 
   ngOnInit() {
 
+    this.alreadyBetted = false;
+    
     this.userService.getLoginObserver().subscribe(loginResponse => {
       this.userId = loginResponse.userId;
       this.apiKey = loginResponse.apiKey;
@@ -45,7 +47,7 @@ export class WinPredictorLeagueComponent implements OnInit, Notifyable<String> {
       let match = this.league.match;
 
       this.userAnswer = (this.maxVal + this.minVal) / 2;
-      
+
       this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
         this.userAnswer = (this.maxVal + this.minVal) / 2;
         this.userAnswerRaw = userAnswer;

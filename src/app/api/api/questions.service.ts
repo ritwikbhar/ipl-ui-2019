@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class QuestionsService {
 
-    protected basePath = 'http://localhost:8000/spfever';
+    protected basePath = 'http://10.165.3.147:8000/spfever';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
