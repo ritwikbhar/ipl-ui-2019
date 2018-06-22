@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class UserService {
 
-    protected basePath = 'http://10.165.3.147:8000/spfever';
+    protected basePath = 'http://bmh1054484.ban.apac.bosch.com:8000/spfever';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

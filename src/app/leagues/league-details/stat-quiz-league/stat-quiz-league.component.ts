@@ -46,6 +46,16 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
       this.coinsToBet = 50;
 
+      this.userAnswer = {
+        id: null,
+        answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
+        coinsBet: this.coinsToBet.toString(),
+        challengeId: this.league.id.toString(),
+        matchId: this.league.match.id.toString(),
+        userid: this.userId.toString(),
+        answers: []
+      };
+
       this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
         this.questions = questions;
         questions.forEach(question => {
