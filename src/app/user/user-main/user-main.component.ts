@@ -21,8 +21,8 @@ export class UserMainComponent implements OnInit {
   signUpPassword: string;
   password: string;
   confirmPassword: string;
-  signUpLabelVisible: boolean;
-  signUpLabelText: string;
+  loginLabelVisible: boolean;
+  loginLabelText: string;
 
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<UserMainComponent>,
@@ -31,7 +31,7 @@ export class UserMainComponent implements OnInit {
 
   ngOnInit() {
 
-    this.signUpLabelVisible = false;
+    this.loginLabelVisible = false;
 
     this.loginForm = this.fb.group({
       email: this.email,
@@ -57,22 +57,24 @@ export class UserMainComponent implements OnInit {
         userId: this.email,
         apiKey: validatedUser.jwtToken,
         expiry: new Date(Date.now() + 3600)
-      })
+      });
+
+      this.dialogRef.close();
 
     }).catch(err => {
-
+      this.loginLabelText = "Authentication error.";
+      this.loginLabelVisible = true;
     });
-    this.dialogRef.close();
   }
 
   onSignupSubmit() {
-      this.data.userService.createNewUser(this.signUpName, this.email, this.signUpPassword).then(user => {
-        this.signUpLabelText = "Your account has been created. Proceed to login";
-        this.signUpLabelVisible = true;
-      }).catch(reason => {
-        this.signUpLabelText = "Account with email already exists";
-        this.signUpLabelVisible = true;
-      });
+    /*this.data.userService.createNewUser(this.signUpName, this.email, this.signUpPassword).then(user => {
+      this.signUpLabelText = "Your account has been created. Proceed to login";
+      this.signUpLabelVisible = true;
+    }).catch(reason => {
+      this.signUpLabelText = "Account with email already exists";
+      this.signUpLabelVisible = true;
+    });*/
   }
 
 }

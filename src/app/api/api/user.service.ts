@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class UserService {
 
-    protected basePath = 'http://localhost:8000/spfever';
+    protected basePath = 'http://10.165.3.147:8000/spfever';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -223,25 +223,25 @@ export class UserService {
     /**
      * logs in the user
      * User provides his userId and password to log in
-     * @param email users email
+     * @param username users name
      * @param password users password
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(email: string, password: string, observe?: 'body', reportProgress?: boolean): Observable<ValidatedUser>;
-    public login(email: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ValidatedUser>>;
-    public login(email: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ValidatedUser>>;
-    public login(email: string, password: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (email === null || email === undefined) {
-            throw new Error('Required parameter email was null or undefined when calling login.');
+    public login(username: string, password: string, observe?: 'body', reportProgress?: boolean): Observable<ValidatedUser>;
+    public login(username: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ValidatedUser>>;
+    public login(username: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ValidatedUser>>;
+    public login(username: string, password: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling login.');
         }
         if (password === null || password === undefined) {
             throw new Error('Required parameter password was null or undefined when calling login.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (email !== undefined) {
-            queryParameters = queryParameters.set('email', <any>email);
+        if (username !== undefined) {
+            queryParameters = queryParameters.set('username', <any>username);
         }
         if (password !== undefined) {
             queryParameters = queryParameters.set('password', <any>password);
