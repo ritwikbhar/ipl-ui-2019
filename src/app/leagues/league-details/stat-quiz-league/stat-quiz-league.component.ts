@@ -46,26 +46,37 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
 
       this.coinsToBet = 50;
 
-      this.userAnswer = {
-        id: null,
-        answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
-        coinsBet: this.coinsToBet.toString(),
-        challengeId: this.league.id.toString(),
-        matchId: this.league.match.id.toString(),
-        userid: this.userId.toString(),
-        answers: []
-      };
-
       this.leagueService.getQuestionsForLeague(this.league.id).then(questions => {
         this.questions = questions;
         questions.forEach(question => {
           if (question.answer === null) {
             this.answersVisible = false;
           }
-          else{
+          else {
             this.league.locked = true;
           }
         });
+
+        if (!this.userAnswer) {
+          this.userAnswer = {
+            id: null,
+            answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
+            coinsBet: this.coinsToBet.toString(),
+            challengeId: this.league.id.toString(),
+            matchId: this.league.match.id.toString(),
+            userid: this.userId.toString(),
+            answers: []
+          };
+
+          this.questions.forEach(question => {
+            this.userAnswer.answers.push(
+              {
+                questionId: question.id.toString(),
+                answer: "false"
+              }
+            );
+          });
+        }
 
         this.userAnswerService.getUserAnswerForLeague(this.userId, this.league.id).then(userAnswer => {
           this.userAnswer = userAnswer;
