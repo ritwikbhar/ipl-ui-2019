@@ -139,27 +139,6 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
   }
 
   onAnswerChanged(changeEvent: MatSlideToggleChange) {
-    if (!this.userAnswer) {
-
-      this.userAnswer = {
-        id: null,
-        answerType: UserChallengeAnswer.AnswerTypeEnum.MULTIPLE,
-        coinsBet: this.coinsToBet.toString(),
-        challengeId: this.league.id.toString(),
-        matchId: this.league.match.id.toString(),
-        userid: this.userId.toString(),
-        answers: []
-      };
-
-      this.questions.forEach(question => {
-        this.userAnswer.answers.push(
-          {
-            questionId: question.id.toString(),
-            answer: "false"
-          }
-        );
-      });
-    }
 
     let questionId = changeEvent.source.id;
     let answer = changeEvent.checked;
