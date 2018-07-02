@@ -4,6 +4,7 @@ import { UserChallengeAnswer } from '../../api/model/userChallengeAnswer';
 import { UserAnswerService } from '../../leagues/user-answer.service';
 import { History } from './models/history-model';
 import { LeaguesService } from '../../leagues/leagues.service';
+import { UserChallengeAnswerService } from '../../api';
 
 @Component({
   selector: 'app-history-card',
@@ -25,12 +26,19 @@ export class HistoryCardComponent implements OnInit {
 
       this.userAnswerService.getUserAnswers(this.username).then(userChallengeAnswers => {
         this.history = [];
+        
+        let toInternerlize = userChallengeAnswers.length;
+        let internazied = 0;
+
         userChallengeAnswers.forEach(userChallengeAnswer => {
 
           this.leaguesService.getLeagueById(userChallengeAnswer.challengeId).then(league => {
             if (league.match !== null && league.match.team1 != null && league.match.team2 != null) {
+
+              internazied++;
+
               let internalizedHistory: History = {
-                date: new Date(league.match.date.toString()).toLocaleDateString(),
+                date: new Date(league.match.date.toString()).toLocaleString(),
                 team1: league.match.team1.name.toString(),
                 team2: league.match.team2.name.toString(),
                 cType: (league.cType == "WIN_PREDICTOR") ? "Win Predictor" : "Stat Guru",
@@ -42,6 +50,10 @@ export class HistoryCardComponent implements OnInit {
               if (!this.history.find(h => h.challengeId == userChallengeAnswer.challengeId)) {
                 this.history.push(internalizedHistory);
               }
+
+              if(internazied >= toInternerlize){
+                this.sortHistory();
+              }
             }
 
           });
@@ -51,7 +63,11 @@ export class HistoryCardComponent implements OnInit {
       });
     });
     this.userService.checkLogin();
+  }
 
-
+  private sortHistory() : void {
+    this.history = this.history.sort((history1, history2) => {
+      return Date.parse(history2.date) - Date.parse(history1.date);
+    });
   }
 }

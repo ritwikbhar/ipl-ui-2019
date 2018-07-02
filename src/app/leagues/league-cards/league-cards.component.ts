@@ -15,11 +15,11 @@ export class LeagueCardsComponent implements OnInit {
   constructor(private leaguesService: LeaguesService, private converterService: ConverterService) { }
 
   ngOnInit() {
-    //TODO remove filter
     this.cardsDetails = [];
     this.leaguesService.getLeaguesAfterToday().then(leagues => {
       leagues
       .forEach(league => {
+      leagues.forEach(league => {
         this.cardsDetails.push(this.converterService.convertFromLeagueToCardDetails(league));
       });
     });
