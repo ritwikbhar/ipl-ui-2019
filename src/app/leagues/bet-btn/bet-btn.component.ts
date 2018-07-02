@@ -20,12 +20,42 @@ export class BetBtnComponent implements OnInit {
   }
 
   increaseBet() {
-    this.coinsBet += 25;
+    if(this.coinsBet < 200){
+      this.coinsBet += 25;
+    }
+    else if (this.coinsBet < 500) {
+      this.coinsBet += 75;
+    }
+    else if(this.coinsBet < 1000) {
+      this.coinsBet += 100;
+    }
+    else if(this.coinsBet < 10000) {
+      this.coinsBet += 500;
+    }
+    else {
+      this.coinsBet += 1000;
+    }
   }
 
   decreaseBet() {
-    if (this.coinsBet > 25) {
+    if(this.coinsBet <= 25){
+      return;
+    }
+
+    if(this.coinsBet < 200){
       this.coinsBet -= 25;
+    }
+    else if (this.coinsBet < 500) {
+      this.coinsBet -= 75;
+    }
+    else if(this.coinsBet < 1000) {
+      this.coinsBet -= 100;
+    }
+    else if(this.coinsBet < 10000) {
+      this.coinsBet -= 500;
+    }
+    else {
+      this.coinsBet -= 1000;
     }
   }
 
