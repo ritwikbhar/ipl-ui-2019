@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row  justify-content-center">
+    <h1 class="col text-center" *ngIf="cardsDetails.length == 0">
+      <br><br>
+      Oops!!! No active leagues yet..
+      <br><i class="material-icons red-text" style="font-size: 3em; color: red;">sentiment_dissatisfied</i>
+    </h1>
     <div class="col-4" *ngFor="let cardDetails of cardsDetails">
       <app-league-card [cardDetails]="cardDetails"></app-league-card>
     </div>
