@@ -158,6 +158,16 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
     return false;
   }
 
+  getAnswerTextForQuestion(questionId) : string {
+    if (this.userAnswer) {
+      let userAnswer = this.userAnswer.answers.find(userAnswer => userAnswer.questionId === questionId);
+      if (userAnswer) {
+        return (userAnswer.answer == "true")?"Yes":"No";
+      }
+    }
+    return "No";
+  }
+
   private continueWithBet(): void {
     this.userAnswer.coinsBet = this.coinsToBet.toString();
     this.userAnswerService.createUserAnswer(this.userAnswer, this.apiKey).then(newUserAnswer => {
