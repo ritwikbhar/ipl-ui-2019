@@ -23,7 +23,8 @@
                     <mat-slide-toggle class="example-margin" 
                     checked="{{ getUserAnswerForQuestion(question.id) }}" 
                     [id]="question.id"
-                    (change)="onAnswerChanged($event)" disabled="{{ alreadyBetted || league.locked || answersVisible}}">
+                    (change)="onAnswerChanged($event)" disabled="{{ alreadyBetted || league.locked || answersVisible}}"
+                    [color]="slideToggleColor">
                     </mat-slide-toggle>
                   </p>
                   <p class="col-2">{{ getAnswerTextForQuestion(question.id) }}</p>

@@ -9,6 +9,7 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { LeagueCardsComponent } from './leagues/league-cards/league-cards.component';
 import { LeagueDetailsComponent } from './leagues/league-details/league-details.component';
 import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedule.component';
+import { DiscussionMainComponent } from './discussion-forum/discussion-main/discussion-main.component';
 
 const routes: Routes = [
   { path: 'leaderboard', component: LeaderboardMainComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
     ]
   },
   { path: 'profile', component: ProfileMainComponent },
-  { path: 'fifa-schedule', component: FifaScheduleComponent }
+  { path: 'fifa-schedule', component: FifaScheduleComponent },
+  { path: 'discussion-forum', component: DiscussionMainComponent }
 ];
 
 

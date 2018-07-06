@@ -109,8 +109,6 @@ export class UserService {
 
   public checkLogin() {
 
-    console.log("Checking Login");
-
     let rawSavedLoginResponse = this.cookieService.get('login-response');
     if (rawSavedLoginResponse) {
       let savedLoginResponse = JSON.parse(rawSavedLoginResponse);
