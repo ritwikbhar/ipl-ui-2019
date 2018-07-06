@@ -11,10 +11,12 @@ import { UserService } from '../../../user/user.service';
 export class ConfirmationDialogComponent implements OnInit {
 
   betFeasable : boolean;
+  betBalanceCheck : boolean;
   remainingBalance : number;
   bettedAmount: number;
   isWithdrawl: boolean;
   walletBalance : number;
+  maxBet : number;
 
   constructor(
     private userService : UserService,
@@ -27,7 +29,9 @@ export class ConfirmationDialogComponent implements OnInit {
     this.bettedAmount = this.data.cointToBet
     this.isWithdrawl = this.data.type === ConfirmationType.WITHDRAWL;
     this.userService.getWalletBalance().then(walletBalance => {
-      this.betFeasable = walletBalance >= this.bettedAmount;
+      this.betFeasable = (walletBalance >= this.bettedAmount);
+      this.maxBet = Number.parseInt((0.95*walletBalance).toString());
+      this.betBalanceCheck = (0.95*walletBalance >= this.bettedAmount);
       this.walletBalance = walletBalance;
       this.remainingBalance = walletBalance - this.bettedAmount;
     })
