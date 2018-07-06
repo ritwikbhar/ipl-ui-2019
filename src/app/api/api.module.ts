@@ -4,7 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { Configuration } from './configuration';
 
 import { ChallengeService } from './api/challenge.service';
+import { ImagesService } from './api/images.service';
 import { MatchService } from './api/match.service';
+import { PostsService } from './api/posts.service';
 import { QuestionsService } from './api/questions.service';
 import { TeamsService } from './api/teams.service';
 import { UserService } from './api/user.service';
@@ -16,7 +18,9 @@ import { UserChallengeAnswerService } from './api/userChallengeAnswer.service';
   exports:      [],
   providers: [
     ChallengeService,
+    ImagesService,
     MatchService,
+    PostsService,
     QuestionsService,
     TeamsService,
     UserService,

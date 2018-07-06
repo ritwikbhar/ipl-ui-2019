@@ -19,6 +19,7 @@ export class StatQuizLeagueComponent implements OnInit, Notifyable<String>  {
   @Input() league: League;
 
   questions: Question[];
+  slideToggleColor : string = "primary";
 
   private coinsToBet: number;
 

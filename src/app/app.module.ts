@@ -19,6 +19,7 @@ import {
 } from '@agm/core';
 import { FifaScheduleModule } from './fifa-schedule/fifa-schedule.module';
 import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedule.component';
+import { DiscussionForumModule } from './discussion-forum/discussion-forum.module';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { FifaScheduleComponent } from './fifa-schedule/fifa-schedule/fifa-schedu
     LeaguesModule,
     DashboardModule,
     ProfileModule,
-    FifaScheduleModule
+    FifaScheduleModule,
+    DiscussionForumModule
   ],
   declarations: [
     AppComponent

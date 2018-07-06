@@ -1,0 +1,70 @@
+<app-navbar [title]="title"></app-navbar>
+<br>
+<br>
+<br>
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="card col-8">
+      <div class="card-body">
+        <h4 class="card-title">
+          <a>Any Queries or want to share something?</a>
+        </h4>
+        <div class="card-text">
+          <div class="form-group shadow-textarea">
+            <textarea class="form-control" rows="3" placeholder="Write whatever is in your mind..." [(ngModel)]="postText"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary float-right" (click)="createPost()">Post</button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row justify-content-center" *ngFor="let post of prevPosts">
+    <div class="card col-8 hoverable" style="padding: 0px !important">
+      <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" style="width: 100%" alt="Card image cap"
+        *ngIf="post.image">
+      <div class="card-body">
+        <h4 class="card-title">
+          <a>{{ post.userDisplayName }}</a>
+        </h4>
+        <div class="card-text">
+          <p>{{ post.text }}</p>
+        </div>
+        <hr>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="getComments(post.id)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Comments
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+              <div class="col-11">
+                <textarea class="form-control" placeholder="Write your comments" [(ngModel)]="post.currentComment"></textarea>
+              </div>
+              <div class="col-1">
+                <br>
+                <a (click)="postComment(post.id)" style="color: #0284c0; cursor: pointer;">
+                  <i class="material-icons">send</i>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="list-group col">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let comment of post.comments">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ comment.userDisplayName }}</h5>
+                    <small class="text-muted">{{ comment.dateTime }}</small>
+                  </div>
+                  <p class="mb-1">{{ comment.text }}</p>
+                </a>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+    </div>
+  </div>
+</div>

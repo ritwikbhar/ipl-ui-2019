@@ -1,7 +1,11 @@
 export * from './challenge.service';
 import { ChallengeService } from './challenge.service';
+export * from './images.service';
+import { ImagesService } from './images.service';
 export * from './match.service';
 import { MatchService } from './match.service';
+export * from './posts.service';
+import { PostsService } from './posts.service';
 export * from './questions.service';
 import { QuestionsService } from './questions.service';
 export * from './teams.service';
@@ -10,4 +14,4 @@ export * from './user.service';
 import { UserService } from './user.service';
 export * from './userChallengeAnswer.service';
 import { UserChallengeAnswerService } from './userChallengeAnswer.service';
-export const APIS = [ChallengeService, MatchService, QuestionsService, TeamsService, UserService, UserChallengeAnswerService];
+export const APIS = [ChallengeService, ImagesService, MatchService, PostsService, QuestionsService, TeamsService, UserService, UserChallengeAnswerService];
