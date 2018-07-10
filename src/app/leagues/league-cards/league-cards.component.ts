@@ -18,12 +18,13 @@ export class LeagueCardsComponent implements OnInit {
     this.cardsDetails = [];
     this.leaguesService.getLeaguesAfterToday().then(leagues => {
       leagues
-      .forEach(league => {
-      leagues.forEach(league => {
-        this.cardsDetails.push(this.converterService.convertFromLeagueToCardDetails(league));
-      });
-    });
-    
-  }
+        .forEach(league => {
+          leagues.forEach(league => {
+            this.cardsDetails.push(this.converterService.convertFromLeagueToCardDetails(league));
+          });
+        });
+
+    }
+}
 
 }

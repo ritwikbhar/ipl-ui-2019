@@ -12,6 +12,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
     { path: '/fifa-schedule', title: 'Fifa Schedule',  icon: 'event_note', class: '' },
     { path: '/leagues', title: 'Leagues',  icon: 'add_to_queue', class: '' },
+    { path: '/discussion-forum', title: 'Discussion Forum',  icon: 'record_voice_over', class: '' },
     { path: '/leaderboard', title: 'Leaderboard',  icon: 'sort', class: '' },
     { path: '/profile', title: 'Profile',  icon: 'perm_identity', class: '' }
 ];
