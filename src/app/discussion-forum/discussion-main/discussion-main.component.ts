@@ -63,6 +63,7 @@ export class DiscussionMainComponent implements OnInit {
         comments: []
       };
       this.prevPosts = [internalizedPost].concat(this.prevPosts);
+      this.postText = "";
     });
   }
 
@@ -82,6 +83,7 @@ export class DiscussionMainComponent implements OnInit {
         userId: comment.userId
       };
       post.comments = [internalizedComment].concat(post.comments);
+      post.currentComment = "";
     });
   }
 
