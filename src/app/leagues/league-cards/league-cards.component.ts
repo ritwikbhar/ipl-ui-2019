@@ -23,8 +23,7 @@ export class LeagueCardsComponent implements OnInit {
             this.cardsDetails.push(this.converterService.convertFromLeagueToCardDetails(league));
           });
         });
-
-    }
-}
+    });
+  }
 
 }

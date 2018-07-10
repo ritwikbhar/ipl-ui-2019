@@ -32,7 +32,7 @@ export class DiscussionMainComponent implements OnInit {
       posts.forEach(post => {
         this.userService.getUser(post.userId).then(user => {
           this.prevPosts.push({
-            dateTime: post.dateTime,
+            dateTime: new Date(post.dateTime).toLocaleString(),
             id: post.id,
             image: null,
             text: post.text,
@@ -54,7 +54,7 @@ export class DiscussionMainComponent implements OnInit {
     }
     this.postApi.createNewPost(post, this.apiKey).subscribe(post => {
       let internalizedPost : InternalizedPost = {
-        dateTime: post.dateTime,
+        dateTime: new Date(post.dateTime).toLocaleString(),
         id: post.id,
         image: null,
         text: post.text,
