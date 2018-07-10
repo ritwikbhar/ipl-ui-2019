@@ -90,17 +90,18 @@ export class DiscussionMainComponent implements OnInit {
     this.postApi.getComments(postId).subscribe(comments => {
       post.comments = [];
       comments.forEach(comment => {
-        let internalizedComment : InternalizedComment = {
-          id: comment.id,
-          dateTime: new Date(comment.dateTime).toLocaleString(),
-          postId: comment.postId,
-          text: comment.text,
-          userDisplayName: this.userdisplayName,
-          userId: comment.userId
-        };
-        post.comments.push(internalizedComment);
-      });
-      
+        this.userService.getUser(post.userId).then(user => {
+          let internalizedComment : InternalizedComment = {
+            id: comment.id,
+            dateTime: new Date(comment.dateTime).toLocaleString(),
+            postId: comment.postId,
+            text: comment.text,
+            userDisplayName: user.displayName,
+            userId: comment.userId
+          };
+          post.comments.push(internalizedComment);
+        });        
+      });      
     });
   }
 }
